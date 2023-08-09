@@ -25,3 +25,82 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+      'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 20px;
+  background: whitesmoke;
+} */
+img {
+  height: 95px;
+}
+.card {
+  background: #fff;
+  padding: 25px 40px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 20vw;
+  min-width: 10rem;
+  margin: 15px 15px;
+}
+img:hover {
+  transform: scale(1.6);
+  transition: all 0.6s ease;
+  background-color: transparent;
+}
+/* .card:hover {
+  transform: scale(1.08);
+  transition: all 0.6s ease;
+} */
+
+.productsWrapper {
+  /* display: grid; */
+  /* grid-template-columns: repeat(6, 1fr); */
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.btn {
+  border: none;
+  outline: none;
+  background: #764abc;
+  padding: 5px 10px;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background: #513282;
+}
+
+.heading {
+  padding: 25px 0;
+}
+.cartCount {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-left: 40px;
+}
+.navLink {
+  text-decoration: none;
+  color: black;
+  margin-left: 20px;
+}
+
+.cartCard {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  margin-bottom: 20px;
+  padding: 14px;
+  border-radius: 5px;
+}
