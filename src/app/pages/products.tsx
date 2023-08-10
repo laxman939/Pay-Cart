@@ -5,13 +5,24 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem, addFav, removeFav } from "../redux/cartSlice";
 
+export interface productType {
+  category: string;
+  description: string;
+  id: number;
+  image: string;
+  price: number;
+  quantity: number;
+  rating: any;
+  title: string;
+}
+
 const Products = () => {
-  const [products, setProducts] = useState<any>([]);
+  const [products, setProducts] = useState<productType[]>([]);
   const [category, setCategory] = useState<string>("all");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const dispatcher = useDispatch();
-  const favItems = useSelector((state: any) => state.cart.favItems);
+  const { favItems, cartItems } = useSelector((state: any) => state.cart);
 
   // const getProducts = async () => {
   //   try {
@@ -44,10 +55,6 @@ const Products = () => {
   useEffect(() => {
     getProductsByCategory("all");
   }, []);
-
-  useEffect(() => {
-    console.log(favItems);
-  }, [favItems]);
 
   return (
     <>
@@ -124,12 +131,12 @@ const Products = () => {
                   <div
                     className="absolute top-1 right-2"
                     onClick={() => {
-                      !favItems.some((e: any) => e.id === product.id)
+                      !favItems.some((e: productType) => e.id === product.id)
                         ? dispatcher(addFav(product))
                         : dispatcher(removeFav(product));
                     }}
                   >
-                    {favItems.some((e: any) => e.id === product.id)
+                    {favItems.some((e: productType) => e.id === product.id)
                       ? "❤️"
                       : "🤍"}
                   </div>
@@ -146,7 +153,42 @@ const Products = () => {
                       className="btn"
                       onClick={() => {
                         console.log(product);
-                        dispatcher(addItem(product));
+                        const addedProduct = cartItems.filter(
+                          (item: productType) => item.id === product.id
+                        )[0];
+                        console.log(addedProduct);
+
+                        if (
+                          cartItems.some(
+                            (item: productType) => item.id === product.id
+                          )
+                        ) {
+                          const updateProduct: any = {
+                            category: addedProduct.category,
+                            description: addedProduct.description,
+                            id: addedProduct.id,
+                            image: addedProduct.image,
+                            price: addedProduct.price,
+                            quantity: addedProduct.quantity + 1,
+                            rating: addedProduct.rating,
+                            title: addedProduct.title,
+                          };
+
+                          // product.quantity = product.quantity + 1;
+                          dispatcher(addItem(updateProduct));
+                        } else {
+                          const newProduct: any = {
+                            category: product.category,
+                            description: product.description,
+                            id: product.id,
+                            image: product.image,
+                            price: product.price,
+                            quantity: 1,
+                            rating: product.rating,
+                            title: product.title,
+                          };
+                          dispatcher(addItem(newProduct));
+                        }
                       }}
                     >
                       Add to cart

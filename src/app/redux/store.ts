@@ -6,7 +6,6 @@ import {
 import {
   useSelector as useReduxSelector,
   useDispatch as useReduxDispatch,
-  type TypedUseSelectorHook,
 } from "react-redux";
 import { cartSlice } from "./cartSlice";
 

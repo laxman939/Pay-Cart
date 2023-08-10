@@ -6,6 +6,8 @@ const Cart = () => {
   const { cartItems, favItems } = useSelector((state: any) => state.cart);
   const dispatcher = useDispatch();
 
+  console.log(cartItems);
+
   return (
     <div>
       {cartItems.length > 0
