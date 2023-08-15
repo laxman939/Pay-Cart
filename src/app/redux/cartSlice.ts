@@ -19,10 +19,10 @@ export const cartSlice = createSlice({
       );
     },
     increaseQnty: (state, action: any) => {
-      // state.cartItems = [...state.cartItems, action.payload];
       const addedProduct = state.cartItems.filter(
-        (item: productType) => item.id === action.payload.id
+        (item: any) => item.id === action.payload.id
       )[0];
+
       const remainingProducts = state.cartItems.filter(
         (item: productType) => item.id !== action.payload.id
       );
@@ -61,6 +61,7 @@ export interface initialStateTypes {
   favItems: any;
 }
 
-export const { addItem, removeItem, addFav, removeFav } = cartSlice.actions;
+export const { addItem, removeItem, addFav, removeFav, increaseQnty } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -1,8 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 const Nav = ({ setPageName }: any) => {
+  const [cartQty, setCartQty] = useState<number>(0);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
   const cartItems = useSelector((state: any) => state.cart.cartItems);
+
+  useEffect(() => {
+    let totalQuantity = 0;
+    for (const product of cartItems) {
+      totalQuantity += product.quantity;
+    }
+    setCartQty(totalQuantity);
+  }, [cartItems]);
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+  }, [window.innerWidth]);
 
   return (
     <nav className="flex justify-between py-5 mx-6">
@@ -14,7 +28,7 @@ const Nav = ({ setPageName }: any) => {
       </div>
       <div
         className={`flex justify-between gap-4 ${
-          window.innerWidth > 1280 ? "md:mr-14 md:pr-2" : "mr-0 pr-0"
+          windowWidth > 1280 ? "md:mr-14 md:pr-2" : "mr-0 pr-0"
         }`}
       >
         {/* <div>Home</div> */}
@@ -45,7 +59,7 @@ const Nav = ({ setPageName }: any) => {
               />
             </svg>
             <sup className="text-white bg-red-600 rounded-full px-1 h-4 flex items-center">
-              {cartItems.length}
+              {cartQty}
             </sup>
           </span>
         </div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import Image from "next/image";
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addItem, addFav, removeFav } from "../redux/cartSlice";
+import { addItem, addFav, removeFav, increaseQnty } from "../redux/cartSlice";
 
 export interface productType {
   category: string;
@@ -42,13 +42,11 @@ const Products = () => {
         : `https://fakestoreapi.com/products/category/${type}`;
     try {
       const response = await axios.get(url);
-      console.log(response.data);
       setProducts([]);
       setProducts(response.data);
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      console.log(error);
     }
   };
 
@@ -152,30 +150,18 @@ const Products = () => {
                     <button
                       className="btn"
                       onClick={() => {
-                        console.log(product);
                         const addedProduct = cartItems.filter(
                           (item: productType) => item.id === product.id
                         )[0];
-                        console.log(addedProduct);
 
                         if (
                           cartItems.some(
                             (item: productType) => item.id === product.id
                           )
                         ) {
-                          const updateProduct: any = {
-                            category: addedProduct.category,
-                            description: addedProduct.description,
-                            id: addedProduct.id,
-                            image: addedProduct.image,
-                            price: addedProduct.price,
-                            quantity: addedProduct.quantity + 1,
-                            rating: addedProduct.rating,
-                            title: addedProduct.title,
-                          };
+                          console.log("qty");
 
-                          // product.quantity = product.quantity + 1;
-                          dispatcher(addItem(updateProduct));
+                          dispatcher(increaseQnty(product));
                         } else {
                           const newProduct: any = {
                             category: product.category,
@@ -187,6 +173,7 @@ const Products = () => {
                             rating: product.rating,
                             title: product.title,
                           };
+                          console.log("new cart");
                           dispatcher(addItem(newProduct));
                         }
                       }}

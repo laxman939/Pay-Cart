@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { addFav, removeFav, removeItem } from "../redux/cartSlice";
+import { productType } from "./products";
 
 const Cart = () => {
   const { cartItems, favItems } = useSelector((state: any) => state.cart);
