@@ -15,34 +15,35 @@ export const cartSlice = createSlice({
     },
     removeItem: (state, action: any) => {
       state.cartItems = state.cartItems.filter(
-        (e: any) => e.id !== action.payload.id
+        (e: productType) => e.id !== action.payload.id
       );
     },
     increaseQnty: (state, action: any) => {
-      const addedProduct = state.cartItems.filter(
-        (item: any) => item.id === action.payload.id
-      )[0];
-
-      const remainingProducts = state.cartItems.filter(
-        (item: productType) => item.id !== action.payload.id
+      const indexToModify = state.cartItems.findIndex(
+        (obj: productType) => obj.id === action.payload.id
       );
 
-      if (
-        state.cartItems.some(
-          (item: productType) => item.id === action.payload.id
-        )
-      ) {
-        const updateProduct: any = {
-          category: addedProduct.category,
-          description: addedProduct.description,
-          id: addedProduct.id,
-          image: addedProduct.image,
-          price: addedProduct.price,
-          quantity: addedProduct.quantity + 1,
-          rating: addedProduct.rating,
-          title: addedProduct.title,
+      if (indexToModify !== -1) {
+        const modifiedObject = {
+          ...state.cartItems[indexToModify],
+          quantity: state.cartItems[indexToModify].quantity + 1,
         };
-        state.cartItems = [...remainingProducts, updateProduct];
+
+        state.cartItems[indexToModify] = modifiedObject;
+      }
+    },
+    decreaseQnty: (state, action: any) => {
+      const indexToModify = state.cartItems.findIndex(
+        (obj: productType) => obj.id === action.payload.id
+      );
+
+      if (indexToModify !== -1) {
+        const modifiedObject = {
+          ...state.cartItems[indexToModify],
+          quantity: state.cartItems[indexToModify].quantity - 1,
+        };
+
+        state.cartItems[indexToModify] = modifiedObject;
       }
     },
     addFav: (state, action: any) => {
@@ -50,7 +51,7 @@ export const cartSlice = createSlice({
     },
     removeFav: (state, action: any) => {
       state.favItems = state.favItems.filter(
-        (e: any) => e.id !== action.payload.id
+        (e: productType) => e.id !== action.payload.id
       );
     },
   },
@@ -61,7 +62,13 @@ export interface initialStateTypes {
   favItems: any;
 }
 
-export const { addItem, removeItem, addFav, removeFav, increaseQnty } =
-  cartSlice.actions;
+export const {
+  addItem,
+  removeItem,
+  addFav,
+  removeFav,
+  increaseQnty,
+  decreaseQnty,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;

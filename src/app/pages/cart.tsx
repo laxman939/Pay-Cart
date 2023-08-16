@@ -1,6 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { addFav, removeFav, removeItem } from "../redux/cartSlice";
+import {
+  addFav,
+  addItem,
+  decreaseQnty,
+  increaseQnty,
+  removeFav,
+  removeItem,
+} from "../redux/cartSlice";
 import { productType } from "./products";
 
 const Cart = () => {
@@ -10,7 +17,7 @@ const Cart = () => {
   console.log(cartItems);
 
   return (
-    <div>
+    <div className="flex flex-wrap">
       {cartItems.length > 0
         ? cartItems.map((product: any) => {
             return (
@@ -18,12 +25,14 @@ const Cart = () => {
                 <div
                   className="absolute top-1 right-2"
                   onClick={() => {
-                    !favItems.some((e: any) => e.id === product.id)
+                    !favItems.some((e: productType) => e.id === product.id)
                       ? dispatcher(addFav(product))
                       : dispatcher(removeFav(product));
                   }}
                 >
-                  {favItems.some((e: any) => e.id === product.id) ? "❤️" : "🤍"}
+                  {favItems.some((e: productType) => e.id === product.id)
+                    ? "❤️"
+                    : "🤍"}
                 </div>
                 {/* <div className="absolute top-1 right-2">🤍❤️</div> */}
                 <img src={product.image} alt="" className="mx-auto my-2" />
@@ -33,11 +42,29 @@ const Cart = () => {
                 <div className="text-center text-black mt-3 mb-9 font-bold">
                   ₹ {Number(product.price).toFixed(2)}
                 </div>
+                <div className="mb-7 text-black text-sm w-75 flex gap-2">
+                  <label className="">Quantity:</label>
+                  <input
+                    value={product.quantity}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                      if (e.target.value > product.quantity) {
+                        dispatcher(increaseQnty(product));
+                      } else if (e.target.value < product.quantity) {
+                        dispatcher(decreaseQnty(product));
+                        // (e.target.value == "0" || product.quantity == "0") &&
+                        //   dispatcher(removeItem(product));
+                      }
+                    }}
+                    className="w-10 rounded"
+                    type="number"
+                    step={1}
+                    min={1}
+                  />
+                </div>
                 <div className="absolute bottom-0 right-6 h-10">
                   <button
                     className="btn"
                     onClick={() => {
-                      console.log(product);
                       dispatcher(removeItem(product));
                     }}
                   >
