@@ -17,11 +17,14 @@ const Cart = () => {
   console.log(cartItems);
 
   return (
-    <div className="flex flex-wrap">
+    <div className="">
       {cartItems.length > 0
         ? cartItems.map((product: any) => {
             return (
-              <div className="text-slate-100 card relative" key={product.id}>
+              <div
+                className="text-slate-100 cartCard relative"
+                key={product.id}
+              >
                 <div
                   className="absolute top-1 right-2"
                   onClick={() => {
@@ -35,16 +38,19 @@ const Cart = () => {
                     : "🤍"}
                 </div>
                 {/* <div className="absolute top-1 right-2">🤍❤️</div> */}
-                <img src={product.image} alt="" className="mx-auto my-2" />
-                <div className="text-center text-black mt-5 text-sm">
+                <img src={product.image} alt="" className="my-2" />
+                <div className="text-center text-black text-sm">
                   {product.title}
                 </div>
-                <div className="text-center text-black mt-3 mb-9 font-bold">
+                <div className="text-center text-black font-bold mx-2">
                   ₹ {Number(product.price).toFixed(2)}
                 </div>
-                <div className="mb-7 text-black text-sm w-75 flex gap-2">
-                  <label className="">Quantity:</label>
+                <div className="mx-2 text-black text-sm w-75 flex gap-2">
+                  <label className="" htmlFor="qty">
+                    Quantity:
+                  </label>
                   <input
+                    id="qty"
                     value={product.quantity}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => {
                       if (e.target.value > product.quantity) {
@@ -61,7 +67,7 @@ const Cart = () => {
                     min={1}
                   />
                 </div>
-                <div className="absolute bottom-0 right-6 h-10">
+                <div className="">
                   <button
                     className="btn"
                     onClick={() => {

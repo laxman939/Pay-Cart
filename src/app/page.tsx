@@ -15,7 +15,7 @@ export default function Home() {
     <div className="w-11/12 mx-auto">
       <Nav setPageName={setPageName} />
       <main className="flex items-center justify-between flex-wrap py-2">
-        <div>
+        <>
           {pageName === "home" ? (
             <Products />
           ) : pageName === "cart" ? (
@@ -23,7 +23,7 @@ export default function Home() {
           ) : (
             <Favorites />
           )}
-        </div>
+        </>
       </main>
 
       <h4 className="text-center my-5 text-2xl tracking-wide">

@@ -7,7 +7,7 @@ const Favorites = () => {
   const dispatcher = useDispatch();
 
   return (
-    <div>
+    <div className="flex flex-wrap">
       {" "}
       {favItems.length > 0
         ? favItems.map((product: any) => {
@@ -30,17 +30,6 @@ const Favorites = () => {
                 </div>
                 <div className="text-center text-black mt-3 mb-9 font-bold">
                   ₹ {Number(product.price).toFixed(2)}
-                </div>
-                <div className="absolute bottom-0 right-6 h-10">
-                  <button
-                    className="btn"
-                    onClick={() => {
-                      console.log(product);
-                      dispatcher(removeItem(product));
-                    }}
-                  >
-                    Remove
-                  </button>
                 </div>
               </div>
             );

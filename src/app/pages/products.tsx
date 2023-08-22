@@ -16,6 +16,17 @@ export interface productType {
   title: string;
 }
 
+const RatingStars = ({ rating }: any) => {
+  const starWidth = (rating / 5) * 100 + "%";
+  return (
+    <div className="rating-stars">
+      <div className="star-rating">
+        <div className="star-filled" style={{ width: `${rating * 20}%` }}></div>
+      </div>
+    </div>
+  );
+};
+
 const Products = () => {
   const [products, setProducts] = useState<productType[]>([]);
   const [category, setCategory] = useState<string>("all");
@@ -24,15 +35,6 @@ const Products = () => {
   const dispatcher = useDispatch();
   const { favItems, cartItems } = useSelector((state: any) => state.cart);
 
-  // const getProducts = async () => {
-  //   try {
-  //     const response = await axios.get("https://fakestoreapi.com/products");
-  //     console.log(response.data);
-  //     setProducts(response.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
   const getProductsByCategory = async (type: string) => {
     setIsLoading(true);
     setCategory(type);
@@ -143,8 +145,14 @@ const Products = () => {
                   <div className="text-center text-black mt-5 text-sm">
                     {product.title}
                   </div>
-                  <div className="text-center text-black mt-3 mb-9 font-bold">
-                    ₹ {Number(product.price).toFixed(2)}
+                  <div className="flex align-items-center">
+                    <div className="text-center text-black mt-3 mb-9 font-bold">
+                      ₹ {Number(product.price).toFixed(2)}
+                    </div>
+                    <div>
+                      <RatingStars rating={3.5} />
+                      {/* Other components */}
+                    </div>
                   </div>
                   <div className="absolute bottom-0 right-6 h-10">
                     <button
