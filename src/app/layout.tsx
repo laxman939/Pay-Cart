@@ -2,6 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./redux/providers";
+import Nav from "../../components/nav";
+import ProductModal from "../../components/productModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,7 +20,13 @@ export default function RootLayout({
   return (
     <Providers>
       <html lang="en">
-        <body className={inter.className}>{children}</body>
+        <body className={inter.className}>
+          <nav className="px-5 py-4">
+            <Nav />
+          </nav>
+          {children}
+          <ProductModal />
+        </body>
       </html>
     </Providers>
   );
