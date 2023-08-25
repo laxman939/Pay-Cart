@@ -1,5 +1,5 @@
 import Products from "./products/page";
-import { getProductsByCategory } from "../../components/commonMethods";
+import { getProductsByCategory } from "../components/commonMethods";
 
 export default async function Page() {
   const products = await getProductsByCategory("all");

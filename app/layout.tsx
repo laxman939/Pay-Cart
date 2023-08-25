@@ -2,8 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./redux/providers";
-import Nav from "../../components/nav";
-import ProductModal from "../../components/productModal";
+import Nav from "../components/nav";
+import ProductModal from "../components/productModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +21,7 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body className={inter.className}>
-          <nav className="px-5 py-4">
+          <nav className="px-6 py-4">
             <Nav />
           </nav>
           {children}

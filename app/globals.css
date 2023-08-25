@@ -15,14 +15,12 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-body {
-  color: #000000;
-}
+
 /* body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-      'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
-      'Helvetica Neue', sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 20px;
@@ -33,7 +31,7 @@ img {
 }
 .card {
   background: #fff;
-  /* padding: 25px 40px; */
+  padding: 25px 10px;
   text-align: center;
   border-radius: 10px;
   width: 20vw;

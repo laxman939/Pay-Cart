@@ -8,7 +8,7 @@ import {
   increaseQnty,
   setProductModalOpen,
   setSelectedProduct,
-} from "../src/app/redux/cartSlice";
+} from "../app/redux/cartSlice";
 
 type propsTypes = {
   product: productType;
@@ -20,12 +20,13 @@ const Product = ({ product }: propsTypes) => {
   const { favItems, cartItems } = useSelector((state: any) => state.cart);
 
   return (
-    <div className="m-5 rounded border hover:scale-105 transition-transform ease-out duration-200 text-slate-100 card relative cursor-pointer">
+    <>
       <div
         onClick={() => {
           dispatcher(setSelectedProduct(product));
           dispatcher(setProductModalOpen(true));
         }}
+        className="p-5 rounded border hover:scale-105 transition-transform ease-out duration-200 text-slate-100 card relative cursor-pointer"
       >
         <div
           className="absolute top-1 right-2"
@@ -39,7 +40,7 @@ const Product = ({ product }: propsTypes) => {
         >
           {favItems.some((e: productType) => e.id === product.id) ? "❤️" : "🤍"}
         </div>
-        <div className="relative max-h-72 flex-1">
+        <div className="max-h-72 flex-1">
           <ProductImage product={product} fill />
         </div>
         <div className="text-center text-black mt-5 text-sm">
@@ -78,7 +79,7 @@ const Product = ({ product }: propsTypes) => {
           </button>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

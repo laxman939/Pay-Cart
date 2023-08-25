@@ -1,5 +1,5 @@
 "use client";
-import Product from "../../../components/product";
+import Product from "../../components/product";
 import { useRouter } from "next/navigation";
 
 type props = {

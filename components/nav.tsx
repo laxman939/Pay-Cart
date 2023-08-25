@@ -23,9 +23,9 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className="flex justify-between mx-5 px-2">
+    <nav className="flex justify-between mx-5 px-3">
       <div
-        className="text-slate-950 hover:text-black cursor-pointer fs-3 font-bold"
+        className="text-slate-950 hover:text-black cursor-pointer text-2xl font-bold"
         // onClick={() => setPageName("home")}
         onClick={() => {
           router.push(`/`);
@@ -49,7 +49,7 @@ const Nav = () => {
           Favorites
         </div>
         <div
-          className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold"
+          className="text-slate-950 hover:text-black cursor-pointer font-bold"
           //   onClick={() => setPageName("cart")}
           onClick={() => {
             router.push(`/cart`);

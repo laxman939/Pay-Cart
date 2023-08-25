@@ -1,8 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { setProductModalOpen } from "@/app/redux/cartSlice";
+import CancelIcon from "@mui/icons-material/Cancel";
+
+const style = {
+  position: "absolute" as "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const ProductModal = () => {
+  const [open, setOpen] = useState(false);
+
   const { isProductModalOpen, selectedProduct } = useSelector(
     (state: any) => state.cart
   );
@@ -40,24 +61,35 @@ const ProductModal = () => {
         //     </span>
         //   </Modal.Footer>
         // </Modal>
-        <div className="absolute top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white p-10">
-          <div className="mt-3 text-center">
-            <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100"></div>
-            <h3 className="text-lg leading-6 font-medium text-gray-900">
-              Successful!
-            </h3>
-            <div className="mt-2 px-7 py-3">
-              <p className="text-sm text-gray-500">{selectedProduct.title}</p>
-            </div>
-            <div className="items-center px-4 py-3">
-              <button
-                id="ok-btn"
-                className="px-4 py-2 bg-green-500 text-white text-base font-medium rounded-md w-full shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-300"
-              >
-                OK
-              </button>
-            </div>
-          </div>
+        <div>
+          <Modal
+            open={isProductModalOpen}
+            onClose={() => {
+              dispatcher(setProductModalOpen(false));
+            }}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+          >
+            <Box sx={style}>
+              <div className="relative">
+                <span
+                  onClick={() => {
+                    dispatcher(setProductModalOpen(false));
+                  }}
+                  className="absolute top-0 left-0 right-0"
+                >
+                  <CancelIcon />
+                </span>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Text in a modal
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  Duis mollis, est non commodo luctus, nisi erat porttitor
+                  ligula.
+                </Typography>
+              </div>
+            </Box>
+          </Modal>
         </div>
       ) : null}
 
