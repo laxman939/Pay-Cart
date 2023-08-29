@@ -6,27 +6,34 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
-import { setProductModalOpen } from "@/app/redux/cartSlice";
+import {
+  addFav,
+  addItem,
+  increaseQnty,
+  removeFav,
+  setProductModalOpen,
+} from "@/app/redux/cartSlice";
 import CancelIcon from "@mui/icons-material/Cancel";
+import ProductImage from "./productImage";
 
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: 640,
+  minHeight: 350,
   bgcolor: "background.paper",
-  border: "2px solid #000",
+  border: "none",
+  borderRadius: 2,
   boxShadow: 24,
-  p: 4,
+  p: 2,
+  outline: "none",
 };
 
 const ProductModal = () => {
-  const [open, setOpen] = useState(false);
-
-  const { isProductModalOpen, selectedProduct } = useSelector(
-    (state: any) => state.cart
-  );
+  const { isProductModalOpen, selectedProduct, favItems, cartItems } =
+    useSelector((state: any) => state.cart);
 
   const dispatcher = useDispatch();
   console.log({ isProductModalOpen });
@@ -35,32 +42,6 @@ const ProductModal = () => {
   return (
     <>
       {isProductModalOpen ? (
-        // <Modal
-        //   show={isProductModalOpen}
-        //   onHide={() => dispatcher(setProductModalOpen(false))}
-        //   size="lg"
-        //   aria-labelledby="contained-modal-title-vcenter"
-        //   centered
-        // >
-        //   <Modal.Header closeButton>
-        //     <Modal.Title id="contained-modal-title-vcenter">
-        //       Modal heading
-        //     </Modal.Title>
-        //   </Modal.Header>
-        //   <Modal.Body>
-        //     <h4>Centered Modal</h4>
-        //     <p>
-        //       Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-        //       dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-        //       ac consectetur ac, vestibulum at eros.
-        //     </p>
-        //   </Modal.Body>
-        //   <Modal.Footer>
-        //     <span onClick={() => dispatcher(setProductModalOpen(false))}>
-        //       Close
-        //     </span>
-        //   </Modal.Footer>
-        // </Modal>
         <div>
           <Modal
             open={isProductModalOpen}
@@ -76,17 +57,80 @@ const ProductModal = () => {
                   onClick={() => {
                     dispatcher(setProductModalOpen(false));
                   }}
-                  className="absolute top-0 left-0 right-0"
+                  className="absolute removeIcon cursor-pointer"
                 >
                   <CancelIcon />
                 </span>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  Text in a modal
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  Duis mollis, est non commodo luctus, nisi erat porttitor
-                  ligula.
-                </Typography>
+                <div className="text-slate-100 relative flex gap-2 mt-6">
+                  <div className="w-1/3 modalImage">
+                    <ProductImage product={selectedProduct} fill />
+                  </div>
+                  <div className="w-2/3">
+                    <div className="text-black mt-5 text-sm">
+                      <h6 className="font-bold my-3 text-center text-xl">
+                        {selectedProduct.title}
+                      </h6>
+                      <p className="font-light italic text-sm">
+                        {selectedProduct.description}
+                      </p>
+                    </div>
+
+                    <div className="flex align-items- justify-between mt-4 mb-9">
+                      <div className="text-center text-black font-bold">
+                        ₹ {Number(selectedProduct.price).toFixed(2)}
+                      </div>
+                      <div
+                        className="text-end"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          !favItems.some(
+                            (e: productType) => e.id === selectedProduct.id
+                          )
+                            ? dispatcher(addFav(selectedProduct))
+                            : dispatcher(removeFav(selectedProduct));
+                          console.log("fav");
+                        }}
+                      >
+                        {favItems.some(
+                          (e: productType) => e.id === selectedProduct.id
+                        )
+                          ? "❤️"
+                          : "🤍"}
+                      </div>
+                    </div>
+
+                    <div className="flex justify-end">
+                      <button
+                        className="btnAdd mt-0"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (
+                            cartItems.some(
+                              (item: productType) =>
+                                item.id === selectedProduct.id
+                            )
+                          ) {
+                            dispatcher(increaseQnty(selectedProduct));
+                          } else {
+                            const newProduct: any = {
+                              category: selectedProduct.category,
+                              description: selectedProduct.description,
+                              id: selectedProduct.id,
+                              image: selectedProduct.image,
+                              price: selectedProduct.price,
+                              quantity: 1,
+                              rating: selectedProduct.rating,
+                              title: selectedProduct.title,
+                            };
+                            dispatcher(addItem(newProduct));
+                          }
+                        }}
+                      >
+                        Add to cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </Box>
           </Modal>
