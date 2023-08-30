@@ -1,12 +1,16 @@
-import Products from "./products/page";
-import { getProductsByCategory } from "../components/commonMethods";
+import LandingPage from "@/components/landing/landingPage";
+// import Products from "./products/page";
 
 export default async function Page() {
-  const products = await getProductsByCategory("all");
-
   return (
-    <main className="flex items-center justify-between flex-wrap py-2">
-      <Products products={products} category={"all"} />
-    </main>
+    <>
+      {/* <nav className="px-6 py-4">
+        <Nav />
+      </nav> */}
+      <main className="flex items-center justify-between flex-wrap">
+        {/* <Products products={products} category={"all"} /> */}
+        <LandingPage />
+      </main>
+    </>
   );
 }

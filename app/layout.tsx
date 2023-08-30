@@ -21,9 +21,6 @@ export default function RootLayout({
     <Providers>
       <html lang="en">
         <body className={inter.className}>
-          <nav className="px-6 py-4">
-            <Nav />
-          </nav>
           {children}
           <ProductModal />
         </body>

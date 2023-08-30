@@ -27,7 +27,10 @@
   background: whitesmoke;
 } */
 img {
-  height: 95px;
+  height: 130px;
+}
+.modalImage img {
+  height: 90%;
 }
 .card {
   background: #fff;
@@ -37,14 +40,14 @@ img {
   width: 20vw;
   min-width: 10rem;
   margin: 15px 15px;
-  border: 1px solid rgb(209, 205, 205);
+  /* border: 1px solid rgb(209, 205, 205); */
 }
 .card div:nth-child(1) {
   cursor: pointer;
 }
 .card img:hover {
   /* cursor: pointer; */
-  transform: scale(1.6);
+  transform: scale(1.5);
   transition: all 0.6s ease;
   background-color: transparent;
 }
@@ -92,5 +95,36 @@ input[type="number"] {
 }
 input[type="number"]:hover {
   border: 1px solid gray;
+}
+.removeIcon {
+  right: -5px;
+  top: -1.96rem;
+  z-index: 10;
+}
+.css-1k4hvgc,
+.css-1wvege7 {
+  /* border: none; */
+  outline: none !important;
+}
+.random1,
+.random2,
+.random3 {
+  background-color: #cccccc;
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+.random1 {
+  background-image: url(../public/images/banner7.jpg);
+}
+.random2 {
+  background-color: rgb(209, 206, 190);
+  background-image: url(../public/images/banner5.jpg);
+}
+.random3 {
+  background-color: rgb(237, 237, 231);
+  background-image: url(../public/images/banner11.jpg);
 }
 /* Rating */
