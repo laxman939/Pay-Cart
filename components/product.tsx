@@ -9,13 +9,14 @@ import {
   setProductModalOpen,
   setSelectedProduct,
 } from "../app/redux/cartSlice";
+import { useState } from "react";
 
 type propsTypes = {
   product: productType;
 };
 
 const Product = ({ product }: propsTypes) => {
-  const router = useRouter();
+  const [isAdded, setIsAdded] = useState(false);
   const dispatcher = useDispatch();
   const { favItems, cartItems } = useSelector((state: any) => state.cart);
 
@@ -35,15 +36,14 @@ const Product = ({ product }: propsTypes) => {
             !favItems.some((e: productType) => e.id === product.id)
               ? dispatcher(addFav(product))
               : dispatcher(removeFav(product));
-            console.log("fav");
           }}
         >
           {favItems.some((e: productType) => e.id === product.id) ? "❤️" : "🤍"}
         </div>
-        <div className="max-h-72 flex-1">
+        <div className="max-h-72 flex justify-center">
           <ProductImage product={product} fill />
         </div>
-        <div className="text-center text-black mt-5 text-sm">
+        <div className="text-center text-black mt-5 text-sm max-w-[100] truncate">
           {product.title}
         </div>
         <div className="flex align-items-center">
@@ -54,28 +54,34 @@ const Product = ({ product }: propsTypes) => {
         <div className="flex justify-end">
           <button
             className="btnAdd"
+            disabled={isAdded}
             onClick={(e) => {
               e.stopPropagation();
-              if (
-                cartItems.some((item: productType) => item.id === product.id)
-              ) {
-                dispatcher(increaseQnty(product));
-              } else {
-                const newProduct: any = {
-                  category: product.category,
-                  description: product.description,
-                  id: product.id,
-                  image: product.image,
-                  price: product.price,
-                  quantity: 1,
-                  rating: product.rating,
-                  title: product.title,
-                };
-                dispatcher(addItem(newProduct));
-              }
+              setIsAdded(true);
+              setTimeout(() => {
+                if (
+                  cartItems.some((item: productType) => item.id === product.id)
+                ) {
+                  dispatcher(increaseQnty(product));
+                  setIsAdded(false);
+                } else {
+                  const newProduct: any = {
+                    category: product.category,
+                    description: product.description,
+                    id: product.id,
+                    image: product.image,
+                    price: product.price,
+                    quantity: 1,
+                    rating: product.rating,
+                    title: product.title,
+                  };
+                  dispatcher(addItem(newProduct));
+                  setIsAdded(false);
+                }
+              }, 1000);
             }}
           >
-            Add to cart
+            {!isAdded ? "Add to cart" : "Added"}
           </button>
         </div>
       </div>
