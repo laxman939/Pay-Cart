@@ -109,15 +109,16 @@ input[type="number"]:hover {
 .random1,
 .random2,
 .random3 {
+  margin-top: 6vh;
   background-color: #cccccc;
-  height: 100vh;
-  background-position: center;
+  height: 55vh;
+  background-position: center -20px;
   background-repeat: no-repeat;
   background-size: cover;
-  position: relative;
 }
 .random1 {
-  background-image: url(../public/images/banner7.jpg);
+  background-image: url(../public/images/banner33.jpg);
+  background-position: center -80px;
 }
 .random2 {
   background-color: rgb(209, 206, 190);
