@@ -122,10 +122,17 @@ input[type="number"]:hover {
 }
 .random2 {
   background-color: rgb(209, 206, 190);
-  background-image: url(../public/images/banner5.jpg);
+
+  background-image: url(../public/images/bgImage2.png);
+  /* background-image: url(../public/images/banner5.jpg); */
 }
 .random3 {
   background-color: rgb(237, 237, 231);
-  background-image: url(../public/images/banner11.jpg);
+  background-image: url(../public/images/bgImage1.png);
+  /* background-image: url(../public/images/banner11.jpg); */
+}
+.sideImages img {
+  /* height: 55vh; */
+  margin-top: 6vh;
 }
 /* Rating */
