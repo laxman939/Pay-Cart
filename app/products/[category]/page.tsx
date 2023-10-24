@@ -1,15 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getProductsByCategory } from "../../../../components/commonMethods";
-import Product from "../../../../components/product";
+import { getProductsByCategory } from "../../../components/commonMethods";
+import Product from "../../../components/product";
 import { useRouter, useParams } from "next/navigation";
+import Nav from "@/components/nav";
 
 const Category = () => {
   const [products, setProducts] = useState<productType[]>([]);
   const router = useRouter();
   const params: any = useParams();
-
-  console.log(decodeURIComponent(params.category));
 
   const getPtoducts = async () => {
     const products = await getProductsByCategory(
@@ -24,6 +23,9 @@ const Category = () => {
 
   return (
     <>
+      <nav className="px-6 py-4">
+        <Nav />
+      </nav>
       <div className="">
         <nav className="flex px-5 mx-5 mb-3">
           <div className="">
@@ -34,7 +36,7 @@ const Category = () => {
                   : "border-transparent"
               }`}
               onClick={() => {
-                router.push(`/`);
+                router.push(`/products`);
               }}
             >
               All
@@ -92,7 +94,9 @@ const Category = () => {
         <div className="">
           <div className="flex justify-center flex-wrap">
             {products.map((product: any) => {
-              return <Product product={product} key={product.id} />;
+              return (
+                <Product product={product} key={product.id} page="products" />
+              );
             })}
           </div>
         </div>
