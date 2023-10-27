@@ -1,5 +1,5 @@
 "use client";
-import Product from "../../../../../components/product";
+import Product from "../../../../components/product";
 import { useParams } from "next/navigation";
 
 const ProductPage = () => {
@@ -26,7 +26,9 @@ const ProductPage = () => {
 
   return (
     <div>
-      {product.id !== 0 ? <Product product={product} key={product.id} /> : null}
+      {product.id !== 0 ? (
+        <Product product={product} key={product.id} page="products" />
+      ) : null}
     </div>
   );
 };
