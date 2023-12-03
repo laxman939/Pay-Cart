@@ -36,8 +36,6 @@ const ProductModal = () => {
     useSelector((state: any) => state.cart);
 
   const dispatcher = useDispatch();
-  console.log({ isProductModalOpen });
-  console.log({ selectedProduct });
 
   return (
     <>
@@ -88,7 +86,6 @@ const ProductModal = () => {
                           )
                             ? dispatcher(addFav(selectedProduct))
                             : dispatcher(removeFav(selectedProduct));
-                          console.log("fav");
                         }}
                       >
                         {favItems.some(
