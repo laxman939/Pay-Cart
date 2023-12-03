@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 
-const Nav = () => {
+interface ChildProps {
+  showLoginPage: boolean;
+  setShowLoginPage: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Nav = ({ setShowLoginPage, showLoginPage }: ChildProps) => {
   const [cartQty, setCartQty] = useState<number>(0);
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const cartItems = useSelector((state: any) => state.cart.cartItems);
@@ -74,6 +79,15 @@ const Nav = () => {
               {cartQty}
             </sup>
           </span>
+        </div>
+        <div
+          className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold"
+          //   onClick={() => setPageName("favorite")}
+          onClick={() => {
+            setShowLoginPage(true);
+          }}
+        >
+          Login
         </div>
       </div>
     </nav>
