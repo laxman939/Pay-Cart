@@ -13,9 +13,10 @@ import { useState } from "react";
 
 type propsTypes = {
   product: productType;
+  page: string;
 };
 
-const Product = ({ product }: propsTypes) => {
+const Product = ({ product, page }: propsTypes) => {
   const [isAdded, setIsAdded] = useState(false);
   const dispatcher = useDispatch();
   const { favItems, cartItems } = useSelector((state: any) => state.cart);
@@ -27,10 +28,14 @@ const Product = ({ product }: propsTypes) => {
           dispatcher(setSelectedProduct(product));
           dispatcher(setProductModalOpen(true));
         }}
-        className="p-5 rounded border hover:scale-105 transition-transform ease-out duration-200 text-slate-100 card relative cursor-pointer"
+        className={`p-5 rounded border hover:scale-105 transition-transform ease-out duration-200 text-slate-100 card relative cursor-pointer  ${
+          page === "landing" ? "text-white hover:text-black" : ""
+        }`}
       >
         <div
-          className="absolute top-1 right-2"
+          className={`${
+            page === "landing" ? "hidden" : "absolute top-1 right-2"
+          }`}
           onClick={(e) => {
             e.stopPropagation();
             !favItems.some((e: productType) => e.id === product.id)
@@ -43,15 +48,21 @@ const Product = ({ product }: propsTypes) => {
         <div className="max-h-72 flex justify-center">
           <ProductImage product={product} fill />
         </div>
-        <div className="text-center text-black mt-5 text-sm max-w-[100] truncate">
+        <div
+          className={`text-center text-black mt-5 text-sm max-w-[100] truncate`}
+        >
           {product.title}
         </div>
-        <div className="flex align-items-center">
-          <div className="text-center text-black mt-3 mb-9 font-bold">
-            ₹ {Number(product.price).toFixed(2)}
+        {page !== "landing" ? (
+          <div className="flex align-items-center">
+            <div className="text-center text-black mt-3 mb-9 font-bold">
+              ₹ {Number(product.price).toFixed(2)}
+            </div>
           </div>
-        </div>
-        <div className="flex justify-end">
+        ) : null}
+        <div
+          className={` ${page === "landing" ? "hidden" : "flex justify-end"}`}
+        >
           <button
             className="btnAdd"
             disabled={isAdded}
