@@ -1,19 +1,16 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { setLoginPage } from "../app/redux/cartSlice";
 
-interface ChildProps {
-  showLoginPage: boolean;
-  setShowLoginPage: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const Nav = ({ setShowLoginPage, showLoginPage }: ChildProps) => {
+const Nav = () => {
   const [cartQty, setCartQty] = useState<number>(0);
   const [windowWidth, setWindowWidth] = useState<number>(0);
-  const cartItems = useSelector((state: any) => state.cart.cartItems);
+  const { cartItems, user } = useSelector((state: any) => state.cart);
 
   const router = useRouter();
+  const dispatcher = useDispatch();
 
   useEffect(() => {
     let totalQuantity = 0;
@@ -29,35 +26,41 @@ const Nav = ({ setShowLoginPage, showLoginPage }: ChildProps) => {
 
   return (
     <nav className="flex justify-between mx-5 px-3">
-      <div
+      <button
+        type="button"
         className="text-slate-950 hover:text-black cursor-pointer text-2xl font-bold"
         // onClick={() => setPageName("home")}
         onClick={() => {
           router.push(`/`);
+          dispatcher(setLoginPage(false));
         }}
       >
         PayCart
-      </div>
+      </button>
       <div
         className={`flex justify-between gap-4 ${
           windowWidth > 1280 ? "md:mr-14 md:pr-2" : "mr-0 pr-0"
         }`}
       >
         {/* <div>Home</div> */}
-        <div
+        <button
           className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold"
           //   onClick={() => setPageName("favorite")}
           onClick={() => {
-            router.push(`/favorites`);
+            !user.isRegistered
+              ? (router.push(`/`), dispatcher(setLoginPage(true)))
+              : router.push(`/favorites`);
           }}
         >
           Favorites
-        </div>
-        <div
+        </button>
+        <button
           className="text-slate-950 hover:text-black cursor-pointer font-bold"
           //   onClick={() => setPageName("cart")}
           onClick={() => {
-            router.push(`/cart`);
+            !user.isRegistered
+              ? (router.push(`/`), dispatcher(setLoginPage(true)))
+              : router.push(`/cart`);
           }}
         >
           <span className="flex text-slate-950 hover:text-black">
@@ -79,16 +82,20 @@ const Nav = ({ setShowLoginPage, showLoginPage }: ChildProps) => {
               {cartQty}
             </sup>
           </span>
-        </div>
-        <div
+        </button>
+        <button
           className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold"
           //   onClick={() => setPageName("favorite")}
           onClick={() => {
-            setShowLoginPage(true);
+            router.push(`/`);
+            // dispatcher(setLoginPage(true));
+            !user.isRegistereduserName
+              ? (router.push(`/`), dispatcher(setLoginPage(true)))
+              : false;
           }}
         >
-          Login
-        </div>
+          {!user.isRegistered ? "Login" : user.username}
+        </button>
       </div>
     </nav>
   );

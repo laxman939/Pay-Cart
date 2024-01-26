@@ -14,7 +14,8 @@ import NoData from "../../components/noData";
 import Nav from "@/components/nav";
 
 const Cart = () => {
-  const { cartItems, favItems } = useSelector((state: any) => state.cart);
+  const { cartItems, favItems, user } = useSelector((state: any) => state.cart);
+
   const dispatcher = useDispatch();
 
   return (
@@ -27,10 +28,10 @@ const Cart = () => {
           cartItems.map((product: any) => {
             return (
               <div
-                className="text-slate-100 cartCard flex items-center justify-between relative"
+                className="text-slate-100 cartCard flex items-center justify-between relative px-5"
                 key={product.id}
               >
-                <div
+                <button
                   className="absolute top-1 right-2"
                   onClick={() => {
                     !favItems.some((e: productType) => e.id === product.id)
@@ -41,7 +42,7 @@ const Cart = () => {
                   {favItems.some((e: productType) => e.id === product.id)
                     ? "❤️"
                     : "🤍"}
-                </div>
+                </button>
                 <Image
                   height={100}
                   width={100}
@@ -91,9 +92,7 @@ const Cart = () => {
             );
           })
         ) : (
-          <>
-            <NoData pageName="cart" />
-          </>
+          <NoData pageName="cart" />
         )}
       </div>
     </>
