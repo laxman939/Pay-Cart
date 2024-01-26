@@ -4,9 +4,6 @@ import LandingPage from "@/components/landing/landingPage";
 export default async function Page() {
   return (
     <>
-      {/* <nav className="px-6 py-4">
-        <Nav />
-      </nav> */}
       <main className="flex items-center justify-between flex-wrap">
         {/* <Products products={products} category={"all"} /> */}
         <LandingPage />
