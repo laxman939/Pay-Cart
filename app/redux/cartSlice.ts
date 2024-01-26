@@ -4,7 +4,13 @@ const initialState: initialStateTypes = {
   cartItems: [],
   favItems: [],
   isProductModalOpen: false,
-  users: [],
+  user: {
+    name: "",
+    emailId: "",
+    password: "",
+    isRegistered: false,
+    isSaved: false,
+  },
   selectedProduct: {
     id: 0,
     title: "",
@@ -71,22 +77,21 @@ export const cartSlice = createSlice({
     setSelectedProduct: (state, action: PayloadAction<productType>) => {
       state.selectedProduct = action.payload;
     },
-    addUser: (state, action: any) => {
-      state.users = [...state.users, action.payload];
+    addUser: (state, action: PayloadAction<UserType>) => {
+      state.user = action.payload;
     },
-    setLoginPage: (state, action: any) => {
+    setLoginPage: (state, action: PayloadAction<boolean>) => {
       state.showLoginPage = action.payload;
     },
   },
 });
 
-export interface User {
+export interface UserType {
   name: string;
   emailId: string;
-  number: string;
+  password: string;
   isRegistered: boolean;
   isSaved: boolean;
-  showLoginPage: boolean;
 }
 
 export interface initialStateTypes {
@@ -94,8 +99,8 @@ export interface initialStateTypes {
   favItems: any;
   isProductModalOpen: boolean;
   selectedProduct: productType;
-  users: User[];
-  showLoginPage: false;
+  user: UserType;
+  showLoginPage: boolean;
 }
 
 export const {
