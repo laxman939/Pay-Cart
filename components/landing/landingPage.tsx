@@ -8,6 +8,7 @@ import Nav from "../nav";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Product from "../product";
+import Register from "../Registration/page";
 
 const LandingPage = () => {
   let items = [
@@ -40,6 +41,8 @@ const LandingPage = () => {
   const [loading, setLoading] = useState(true);
   const [type, setType] = useState("new");
   const [products, setProducts] = useState([]);
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [showLoginPage, setShowLoginPage] = useState(false);
 
   const getProductsByCategory = async () => {
     let url = `https://fakestoreapi.com/products?limit=4`;
@@ -57,12 +60,14 @@ const LandingPage = () => {
   }, [type]);
 
   return (
-    <>
-      <div className=" w-full">
-        <div className="mt-4">
-          <Nav />
-        </div>
-        {/* <div
+    <div className="w-full">
+      <div className="py-5">
+        <Nav
+          setShowLoginPage={setShowLoginPage}
+          showLoginPage={showLoginPage}
+        />
+      </div>
+      {/* <div
         className="flex items-center text-slate-950 hover:text-black cursor-pointer text-2xl font-bold ml-2 mt-2"
         // onClick={() => setPageName("home")}
       >
@@ -84,89 +89,91 @@ const LandingPage = () => {
           </svg>
         </span>
       </div> */}
-        <div className="">
-          <div className="flex justify-between gap-2 items-center mx-2">
-            <Carousel
-              className="w-9/12"
-              navButtonsAlwaysVisible
-              fullHeightHover={true} // We want the nav buttons wrapper to only be as big as the button element is
-            >
-              {items.length > 0 &&
-                items.map((item, i) => <Item key={item.title} item={item} />)}
-            </Carousel>
-            <div
-              className="flex flex-col items-center my-auto sideImages"
-              // style={{ height: "55vh" }}
-            >
-              <div className="relative">
-                <Image
-                  src={banner1}
-                  alt=""
-                  width={300}
-                  height={100}
-                  className={` duration-700 ease-in-out group-hover:opacity-75 ${
-                    loading
-                      ? "scale-110 blur-2xl grayscale"
-                      : "scale-100 blur-0 grayscale-0"
-                  }`}
-                  onLoadingComplete={() => setLoading(false)}
-                />
-                <div className=" absolute bottom-2 right-2 text-white bg-gray-900 px-2 rounded">
-                  Men collections
+      {showLoginPage ? (
+        <Register />
+      ) : (
+        <>
+          <div className="">
+            <div className="flex justify-between gap-2 items-center mx-2">
+              <Carousel
+                className="w-9/12"
+                navButtonsAlwaysVisible
+                fullHeightHover={true}
+              >
+                {items.length > 0 &&
+                  items.map((item, i) => <Item key={item.title} item={item} />)}
+              </Carousel>
+              <div className="flex flex-col items-center my-auto sideImages">
+                <div className="relative">
+                  <Image
+                    src={banner1}
+                    alt=""
+                    width={300}
+                    height={100}
+                    className={` duration-700 ease-in-out group-hover:opacity-75 ${
+                      loading
+                        ? "scale-110 blur-2xl grayscale"
+                        : "scale-100 blur-0 grayscale-0"
+                    }`}
+                    onLoadingComplete={() => setLoading(false)}
+                  />
+                  <div className=" absolute bottom-2 right-2 text-white bg-gray-900 px-2 rounded">
+                    Men collections
+                  </div>
                 </div>
-              </div>
-              <div className="pt-3 relative">
-                {" "}
-                <Image
-                  src={banner2}
-                  alt=""
-                  width={300}
-                  height={100}
-                  className={` duration-700 ease-in-out group-hover:opacity-75 ${
-                    loading
-                      ? "scale-110 blur-2xl grayscale"
-                      : "scale-100 blur-0 grayscale-0"
-                  }`}
-                  onLoadingComplete={() => setLoading(false)}
-                />
-                <div className=" absolute bottom-2 right-2 text-white bg-gray-600 px-2 rounded">
-                  Summer collections
+                <div className="pt-3 relative">
+                  {" "}
+                  <Image
+                    src={banner2}
+                    alt=""
+                    width={300}
+                    height={100}
+                    className={` duration-700 ease-in-out group-hover:opacity-75 ${
+                      loading
+                        ? "scale-110 blur-2xl grayscale"
+                        : "scale-100 blur-0 grayscale-0"
+                    }`}
+                    onLoadingComplete={() => setLoading(false)}
+                  />
+                  <div className=" absolute bottom-2 right-2 text-white bg-gray-600 px-2 rounded">
+                    Summer collections
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div>
-          <div className="flex gap-5 mx-2 my-3 bg-gray-300 font-bold">
-            <span
-              className={`py-3 px-4 cursor-pointer ${
-                type === "new" ? "bg-gray-400" : "bg-gray-300"
-              }`}
-              onClick={() => setType("new")}
-            >
-              New arrivals
-            </span>
-            <span
-              className={`py-3 px-4 cursor-pointer ${
-                type === "best" ? "bg-gray-400" : "bg-gray-300"
-              }`}
-              onClick={() => setType("best")}
-            >
-              Best sellers
-            </span>
+          <div>
+            <div className="flex gap-5 mx-2 my-3 bg-gray-300 font-bold">
+              <span
+                className={`py-3 px-4 cursor-pointer ${
+                  type === "new" ? "bg-gray-400" : "bg-gray-300"
+                }`}
+                onClick={() => setType("new")}
+              >
+                New arrivals
+              </span>
+              <span
+                className={`py-3 px-4 cursor-pointer ${
+                  type === "best" ? "bg-gray-400" : "bg-gray-300"
+                }`}
+                onClick={() => setType("best")}
+              >
+                Best sellers
+              </span>
+            </div>
           </div>
-        </div>
-        <div>
-          <div className="flex justify-center flex-wrap">
-            {products.map((product: any) => {
-              return (
-                <Product product={product} key={product.id} page="landing" />
-              );
-            })}
+          <div>
+            <div className="flex justify-center flex-wrap">
+              {products.map((product: any) => {
+                return (
+                  <Product product={product} key={product.id} page="landing" />
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </div>
-    </>
+        </>
+      )}
+    </div>
   );
 };
 

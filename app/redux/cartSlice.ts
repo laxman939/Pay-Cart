@@ -4,6 +4,7 @@ const initialState: initialStateTypes = {
   cartItems: [],
   favItems: [],
   isProductModalOpen: false,
+  users: [],
   selectedProduct: {
     id: 0,
     title: "",
@@ -16,6 +17,7 @@ const initialState: initialStateTypes = {
       count: 0,
     },
   },
+  showLoginPage: false,
 };
 
 export const cartSlice = createSlice({
@@ -69,14 +71,31 @@ export const cartSlice = createSlice({
     setSelectedProduct: (state, action: PayloadAction<productType>) => {
       state.selectedProduct = action.payload;
     },
+    addUser: (state, action: any) => {
+      state.users = [...state.users, action.payload];
+    },
+    setLoginPage: (state, action: any) => {
+      state.showLoginPage = action.payload;
+    },
   },
 });
+
+export interface User {
+  name: string;
+  emailId: string;
+  number: string;
+  isRegistered: boolean;
+  isSaved: boolean;
+  showLoginPage: boolean;
+}
 
 export interface initialStateTypes {
   cartItems: any;
   favItems: any;
   isProductModalOpen: boolean;
   selectedProduct: productType;
+  users: User[];
+  showLoginPage: false;
 }
 
 export const {
@@ -88,6 +107,8 @@ export const {
   decreaseQnty,
   setProductModalOpen,
   setSelectedProduct,
+  addUser,
+  setLoginPage,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
