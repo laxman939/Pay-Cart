@@ -11,10 +11,12 @@ import {
   addItem,
   increaseQnty,
   removeFav,
+  setLoginPage,
   setProductModalOpen,
 } from "@/app/redux/cartSlice";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ProductImage from "./productImage";
+import { useRouter } from "next/navigation";
 
 const style = {
   position: "absolute" as "absolute",
@@ -32,10 +34,13 @@ const style = {
 };
 
 const ProductModal = () => {
-  const { isProductModalOpen, selectedProduct, favItems, cartItems } =
+  const { isProductModalOpen, selectedProduct, favItems, cartItems, user } =
     useSelector((state: any) => state.cart);
 
+  console.log({ cartItems });
+
   const dispatcher = useDispatch();
+  const router = useRouter();
 
   return (
     <>
@@ -59,8 +64,8 @@ const ProductModal = () => {
                 >
                   <CancelIcon />
                 </span>
-                <div className="text-slate-100 relative flex gap-2 mt-6">
-                  <div className="w-1/3 modalImage">
+                <div className="text-slate-100 relative flex gap-2 mt-6 px-7">
+                  <div className="w-2/5 modalImage">
                     <ProductImage product={selectedProduct} fill />
                   </div>
                   <div className="w-2/3">
@@ -77,15 +82,20 @@ const ProductModal = () => {
                       <div className="text-center text-black font-bold">
                         ₹ {Number(selectedProduct.price).toFixed(2)}
                       </div>
-                      <div
+                      <button
                         className="text-end"
                         onClick={(e) => {
                           e.stopPropagation();
-                          !favItems.some(
-                            (e: productType) => e.id === selectedProduct.id
-                          )
-                            ? dispatcher(addFav(selectedProduct))
-                            : dispatcher(removeFav(selectedProduct));
+                          if (user.isRegistered) {
+                            !favItems.some(
+                              (e: productType) => e.id === selectedProduct.id
+                            )
+                              ? dispatcher(addFav(selectedProduct))
+                              : dispatcher(removeFav(selectedProduct));
+                          } else {
+                            dispatcher(setProductModalOpen(false));
+                            dispatcher(setLoginPage(true));
+                          }
                         }}
                       >
                         {favItems.some(
@@ -93,33 +103,40 @@ const ProductModal = () => {
                         )
                           ? "❤️"
                           : "🤍"}
-                      </div>
+                      </button>
                     </div>
 
                     <div className="flex justify-end">
                       <button
                         className="btnAdd mt-0"
                         onClick={(e) => {
+                          console.log(!user.isRegistered);
+
                           e.stopPropagation();
-                          if (
-                            cartItems.some(
-                              (item: productType) =>
-                                item.id === selectedProduct.id
-                            )
-                          ) {
-                            dispatcher(increaseQnty(selectedProduct));
+                          if (user.isRegistered) {
+                            if (
+                              cartItems.some(
+                                (item: productType) =>
+                                  item.id === selectedProduct.id
+                              )
+                            ) {
+                              dispatcher(increaseQnty(selectedProduct));
+                            } else {
+                              const newProduct: any = {
+                                category: selectedProduct.category,
+                                description: selectedProduct.description,
+                                id: selectedProduct.id,
+                                image: selectedProduct.image,
+                                price: selectedProduct.price,
+                                quantity: 1,
+                                rating: selectedProduct.rating,
+                                title: selectedProduct.title,
+                              };
+                              dispatcher(addItem(newProduct));
+                            }
                           } else {
-                            const newProduct: any = {
-                              category: selectedProduct.category,
-                              description: selectedProduct.description,
-                              id: selectedProduct.id,
-                              image: selectedProduct.image,
-                              price: selectedProduct.price,
-                              quantity: 1,
-                              rating: selectedProduct.rating,
-                              title: selectedProduct.title,
-                            };
-                            dispatcher(addItem(newProduct));
+                            dispatcher(setProductModalOpen(false));
+                            dispatcher(setLoginPage(true));
                           }
                         }}
                       >

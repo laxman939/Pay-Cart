@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import ProductImage from "./productImage";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -8,8 +7,10 @@ import {
   increaseQnty,
   setProductModalOpen,
   setSelectedProduct,
+  setLoginPage,
 } from "../app/redux/cartSlice";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type propsTypes = {
   product: productType;
@@ -19,7 +20,8 @@ type propsTypes = {
 const Product = ({ product, page }: propsTypes) => {
   const [isAdded, setIsAdded] = useState(false);
   const dispatcher = useDispatch();
-  const { favItems, cartItems } = useSelector((state: any) => state.cart);
+  const router = useRouter();
+  const { favItems, cartItems, user } = useSelector((state: any) => state.cart);
 
   return (
     <button
@@ -77,28 +79,33 @@ const Product = ({ product, page }: propsTypes) => {
           disabled={isAdded}
           onClick={(e) => {
             e.stopPropagation();
-            setIsAdded(true);
-            setTimeout(() => {
-              if (
-                cartItems.some((item: productType) => item.id === product.id)
-              ) {
-                dispatcher(increaseQnty(product));
-                setIsAdded(false);
-              } else {
-                const newProduct: any = {
-                  category: product.category,
-                  description: product.description,
-                  id: product.id,
-                  image: product.image,
-                  price: product.price,
-                  quantity: 1,
-                  rating: product.rating,
-                  title: product.title,
-                };
-                dispatcher(addItem(newProduct));
-                setIsAdded(false);
-              }
-            }, 1000);
+            if (user.isRegistered) {
+              setIsAdded(true);
+              setTimeout(() => {
+                if (
+                  cartItems.some((item: productType) => item.id === product.id)
+                ) {
+                  dispatcher(increaseQnty(product));
+                  setIsAdded(false);
+                } else {
+                  const newProduct: any = {
+                    category: product.category,
+                    description: product.description,
+                    id: product.id,
+                    image: product.image,
+                    price: product.price,
+                    quantity: 1,
+                    rating: product.rating,
+                    title: product.title,
+                  };
+                  dispatcher(addItem(newProduct));
+                  setIsAdded(false);
+                }
+              }, 1000);
+            } else {
+              router.push(`/`);
+              dispatcher(setLoginPage(true));
+            }
           }}
         >
           {!isAdded ? "Add to cart" : "Added"}
