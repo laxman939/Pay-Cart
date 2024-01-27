@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Product from "../product";
 import Register from "../Registration/page";
+import { useSelector } from "react-redux";
 
 const LandingPage = () => {
   let items = [
@@ -42,10 +43,11 @@ const LandingPage = () => {
   const [type, setType] = useState("new");
   const [products, setProducts] = useState([]);
   const [isRegistered, setIsRegistered] = useState(false);
-  const [showLoginPage, setShowLoginPage] = useState(false);
+
+  const { showLoginPage } = useSelector((state: any) => state.cart);
 
   const getProductsByCategory = async () => {
-    let url = `https://fakestoreapi.com/products?limit=4`;
+    let url = `https://fakestoreapi.com/products`;
 
     try {
       const response = await axios.get(url);
@@ -62,10 +64,7 @@ const LandingPage = () => {
   return (
     <div className="w-full">
       <div className="py-5">
-        <Nav
-          setShowLoginPage={setShowLoginPage}
-          showLoginPage={showLoginPage}
-        />
+        <Nav />
       </div>
       {/* <div
         className="flex items-center text-slate-950 hover:text-black cursor-pointer text-2xl font-bold ml-2 mt-2"
@@ -144,31 +143,37 @@ const LandingPage = () => {
           </div>
           <div>
             <div className="flex gap-5 mx-2 my-3 bg-gray-300 font-bold">
-              <span
+              <button
                 className={`py-3 px-4 cursor-pointer ${
                   type === "new" ? "bg-gray-400" : "bg-gray-300"
                 }`}
                 onClick={() => setType("new")}
               >
                 New arrivals
-              </span>
-              <span
+              </button>
+              <button
                 className={`py-3 px-4 cursor-pointer ${
                   type === "best" ? "bg-gray-400" : "bg-gray-300"
                 }`}
                 onClick={() => setType("best")}
               >
                 Best sellers
-              </span>
+              </button>
             </div>
           </div>
           <div>
             <div className="flex justify-center flex-wrap">
-              {products.map((product: any) => {
-                return (
-                  <Product product={product} key={product.id} page="landing" />
-                );
-              })}
+              {products
+                .slice(type === "best" ? 2 : 6, type === "best" ? 6 : 10)
+                .map((product: any) => {
+                  return (
+                    <Product
+                      product={product}
+                      key={product.id}
+                      page="landing"
+                    />
+                  );
+                })}
             </div>
           </div>
         </>
