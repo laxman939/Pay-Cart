@@ -1,27 +1,26 @@
-"use client"; // Mark this as a client component since we're using hooks
-
 import { useEffect, useState } from "react";
 import { getProductsByCategory } from "@/components/commonMethods";
-import Product from "../../components/product";
+import Product from "@/components/product"; // Correct relative path
 import { useRouter, useParams } from "next/navigation";
 import Nav from "@/components/nav";
 
-// Default export required for Next.js pages
 export default function ProductsPage() {
   const [products, setProducts] = useState([]);
   const router = useRouter();
-  const params = useParams();
+  const params = useParams(); // This will fetch URL parameters like category
 
-  const category: any = params?.category || "all"; // Default to 'all' if no category
+  const category: any = params?.category || "all"; // Default to 'all' if no category is provided
 
+  // Fetch products based on category
   const getAllProducts = async () => {
     const data = await getProductsByCategory(category);
     setProducts(data);
   };
 
+  // Fetch products when component loads and when the category changes
   useEffect(() => {
     getAllProducts();
-  }, [category]); // Refetch when category changes
+  }, [category]);
 
   return (
     <>
