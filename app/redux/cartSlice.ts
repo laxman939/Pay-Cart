@@ -3,12 +3,14 @@ import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 const initialState: initialStateTypes = {
   cartItems: [],
   favItems: [],
+  users: [],
   isProductModalOpen: false,
-  user: {
+  loggedInUser: {
     name: "",
     emailId: "",
     password: "",
     isRegistered: false,
+    isLoggedIn: false,
     isSaved: false,
   },
   selectedProduct: {
@@ -77,9 +79,41 @@ export const cartSlice = createSlice({
     setSelectedProduct: (state, action: PayloadAction<productType>) => {
       state.selectedProduct = action.payload;
     },
+    // addUser: (state, action: PayloadAction<UserType>) => {
+    //   state.user = action.payload;
+
+    // },
     addUser: (state, action: PayloadAction<UserType>) => {
-      state.user = action.payload;
+      const indexToModify = state.users.findIndex(
+        (obj: UserType) => obj.emailId === action.payload.emailId
+      );
+      console.log({ indexToModify });
+      console.log(action.payload, "action.payload");
+
+      if (indexToModify !== -1) {
+        const modifiedObject = {
+          name: action.payload.name,
+          emailId: action.payload.emailId,
+          password: action.payload.password,
+          isRegistered: action.payload.isRegistered,
+          isLoggedIn: action.payload.isLoggedIn,
+          isSaved: action.payload.isSaved,
+
+          // ...state.users[indexToModify],
+
+          // isLoggedIn: true,
+        };
+
+        state.users[indexToModify] = modifiedObject;
+        state.loggedInUser = action.payload;
+      } else {
+        state.users = [...state.users, action.payload];
+      }
+      console.log(state.users, state.loggedInUser);
     },
+    // addUser: (state, action: PayloadAction<UserType>) => {
+    //   state.user = action.payload;
+    // },
     setLoginPage: (state, action: PayloadAction<boolean>) => {
       state.showLoginPage = action.payload;
     },
@@ -91,6 +125,7 @@ export interface UserType {
   emailId: string;
   password: string;
   isRegistered: boolean;
+  isLoggedIn: boolean;
   isSaved: boolean;
 }
 
@@ -99,7 +134,8 @@ export interface initialStateTypes {
   favItems: any;
   isProductModalOpen: boolean;
   selectedProduct: productType;
-  user: UserType;
+  loggedInUser: UserType;
+  users: UserType[];
   showLoginPage: boolean;
 }
 

@@ -21,7 +21,9 @@ const Product = ({ product, page }: propsTypes) => {
   const [isAdded, setIsAdded] = useState(false);
   const dispatcher = useDispatch();
   const router = useRouter();
-  const { favItems, cartItems, user } = useSelector((state: any) => state.cart);
+  const { favItems, cartItems, loggedInUser } = useSelector(
+    (state: any) => state.cart
+  );
 
   return (
     <button
@@ -79,7 +81,7 @@ const Product = ({ product, page }: propsTypes) => {
           disabled={isAdded}
           onClick={(e) => {
             e.stopPropagation();
-            if (user.isRegistered) {
+            if (loggedInUser.isRegistered) {
               setIsAdded(true);
               setTimeout(() => {
                 if (

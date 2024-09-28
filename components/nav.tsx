@@ -7,7 +7,7 @@ import { setLoginPage } from "../app/redux/cartSlice";
 const Nav = () => {
   const [cartQty, setCartQty] = useState<number>(0);
   const [windowWidth, setWindowWidth] = useState<number>(0);
-  const { cartItems, user } = useSelector((state: any) => state.cart);
+  const { cartItems, loggedInUser } = useSelector((state: any) => state.cart);
 
   const router = useRouter();
   const dispatcher = useDispatch();
@@ -22,6 +22,7 @@ const Nav = () => {
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
+    console.log(!loggedInUser.isRegistered, loggedInUser);
   }, []);
 
   return (
@@ -47,7 +48,7 @@ const Nav = () => {
           className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold"
           //   onClick={() => setPageName("favorite")}
           onClick={() => {
-            !user.isRegistered
+            !loggedInUser.isRegistered
               ? (router.push(`/`), dispatcher(setLoginPage(true)))
               : router.push(`/favorites`);
           }}
@@ -58,7 +59,7 @@ const Nav = () => {
           className="text-slate-950 hover:text-black cursor-pointer font-bold"
           //   onClick={() => setPageName("cart")}
           onClick={() => {
-            !user.isRegistered
+            !loggedInUser.isRegistered
               ? (router.push(`/`), dispatcher(setLoginPage(true)))
               : router.push(`/cart`);
           }}
@@ -89,12 +90,12 @@ const Nav = () => {
           onClick={() => {
             router.push(`/`);
             // dispatcher(setLoginPage(true));
-            !user.isRegistereduserName
+            !loggedInUser.isLoggedIn
               ? (router.push(`/`), dispatcher(setLoginPage(true)))
               : false;
           }}
         >
-          {!user.isRegistered ? "Login" : user.username}
+          {!loggedInUser.isLoggedIn ? "Login" : loggedInUser.name}
         </button>
       </div>
     </nav>
