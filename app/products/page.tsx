@@ -113,5 +113,3 @@ const Products = ({ category }: propsType) => {
     </>
   );
 };
-
-export default Products;
