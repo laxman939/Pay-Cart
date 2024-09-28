@@ -10,7 +10,7 @@ type propsType = {
   category: string;
 };
 
-const Products = ({ category }: propsType) => {
+export const Products = ({ category }: propsType) => {
   const [products, setProducts] = useState([]);
   const router = useRouter();
   const params: any = useParams();
