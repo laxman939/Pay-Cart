@@ -5,12 +5,11 @@ import Product from "../../components/product";
 import { useRouter, useParams } from "next/navigation";
 import Nav from "@/components/nav";
 
-type propsType = {
-  products: productType[];
-  category: string;
+type PropsType = {
+  category?: string; // Make it optional since the page may not have category initially
 };
 
-export const Products = ({ category }: propsType) => {
+export default function ProductsPage({ category }: PropsType) {
   const [products, setProducts] = useState([]);
   const router = useRouter();
   const params: any = useParams();
@@ -24,7 +23,6 @@ export const Products = ({ category }: propsType) => {
     getAllProducts();
   }, []);
 
-  // console.log(decodeURIComponent(params.category));
   return (
     <>
       <nav className="px-6 py-4">
@@ -35,14 +33,11 @@ export const Products = ({ category }: propsType) => {
           <div className="">
             <span
               className={`mx-3 cursor-pointer ${
-                category === undefined
+                !category
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => {
-                router.push(`/products`);
-                // getProductsByCategory("all");
-              }}
+              onClick={() => router.push("/products")}
             >
               All
             </span>
@@ -52,10 +47,7 @@ export const Products = ({ category }: propsType) => {
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => {
-                router.push(`/products/men's clothing`);
-                // getProductsByCategory("men's clothing")
-              }}
+              onClick={() => router.push("/products/men's clothing")}
             >
               Men&apos;s clothing
             </span>
@@ -65,10 +57,7 @@ export const Products = ({ category }: propsType) => {
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => {
-                router.push(`/products/women's clothing`);
-                // getProductsByCategory("women's clothing")
-              }}
+              onClick={() => router.push("/products/women's clothing")}
             >
               Women&apos;s clothing
             </span>
@@ -78,10 +67,7 @@ export const Products = ({ category }: propsType) => {
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => {
-                router.push(`/products/electronics`);
-                // getProductsByCategory("electronics")
-              }}
+              onClick={() => router.push("/products/electronics")}
             >
               Electronics
             </span>
@@ -91,25 +77,20 @@ export const Products = ({ category }: propsType) => {
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => {
-                router.push(`/products/jewelery`);
-                //getProductsByCategory("jewelery")
-              }}
+              onClick={() => router.push("/products/jewelery")}
             >
-              Jewellary
+              Jewellery
             </span>
           </div>
         </nav>
         <div className="">
           <div className="flex justify-center flex-wrap">
-            {products.map((product: any) => {
-              return (
-                <Product product={product} key={product.id} page="products" />
-              );
-            })}
+            {products.map((product: any) => (
+              <Product product={product} key={product.id} page="products" />
+            ))}
           </div>
         </div>
       </div>
     </>
   );
-};
+}
