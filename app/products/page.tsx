@@ -5,12 +5,12 @@ import Product from "../../components/product";
 import { useRouter, useParams } from "next/navigation";
 import Nav from "@/components/nav";
 
-type props = {
+type propsType = {
   products: productType[];
   category: string;
 };
 
-const Products = ({ category }: props) => {
+const Products = ({ category }: propsType) => {
   const [products, setProducts] = useState([]);
   const router = useRouter();
   const params: any = useParams();
