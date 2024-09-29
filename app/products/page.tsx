@@ -1,42 +1,48 @@
+"use client";
 import { useEffect, useState } from "react";
 import { getProductsByCategory } from "@/components/commonMethods";
-import Product from "@/components/product"; // Correct relative path
+import Product from "../../components/product";
 import { useRouter, useParams } from "next/navigation";
 import Nav from "@/components/nav";
 
-export default function ProductsPage() {
+type propsType = {
+  products: productType[];
+  category: string;
+};
+
+const Products = ({ category }: propsType) => {
   const [products, setProducts] = useState([]);
   const router = useRouter();
-  const params = useParams(); // This will fetch URL parameters like category
+  const params: any = useParams();
 
-  const category: any = params?.category || "all"; // Default to 'all' if no category is provided
-
-  // Fetch products based on category
   const getAllProducts = async () => {
-    const data = await getProductsByCategory(category);
+    const data = await getProductsByCategory("all");
     setProducts(data);
   };
 
-  // Fetch products when component loads and when the category changes
   useEffect(() => {
     getAllProducts();
-  }, [category]);
+  }, []);
 
+  // console.log(decodeURIComponent(params.category));
   return (
     <>
       <nav className="px-6 py-4">
         <Nav />
       </nav>
-      <div>
+      <div className="">
         <nav className="flex px-5 mx-5 mb-3">
-          <div>
+          <div className="">
             <span
               className={`mx-3 cursor-pointer ${
-                category === "all"
+                category === undefined
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => router.push("/products")}
+              onClick={() => {
+                router.push(`/products`);
+                // getProductsByCategory("all");
+              }}
             >
               All
             </span>
@@ -46,7 +52,10 @@ export default function ProductsPage() {
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => router.push("/products/men's clothing")}
+              onClick={() => {
+                router.push(`/products/men's clothing`);
+                // getProductsByCategory("men's clothing")
+              }}
             >
               Men&apos;s clothing
             </span>
@@ -56,7 +65,10 @@ export default function ProductsPage() {
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => router.push("/products/women's clothing")}
+              onClick={() => {
+                router.push(`/products/women's clothing`);
+                // getProductsByCategory("women's clothing")
+              }}
             >
               Women&apos;s clothing
             </span>
@@ -66,7 +78,10 @@ export default function ProductsPage() {
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => router.push("/products/electronics")}
+              onClick={() => {
+                router.push(`/products/electronics`);
+                // getProductsByCategory("electronics")
+              }}
             >
               Electronics
             </span>
@@ -76,20 +91,27 @@ export default function ProductsPage() {
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
-              onClick={() => router.push("/products/jewelery")}
+              onClick={() => {
+                router.push(`/products/jewelery`);
+                //getProductsByCategory("jewelery")
+              }}
             >
-              Jewellery
+              Jewellary
             </span>
           </div>
         </nav>
-        <div>
+        <div className="">
           <div className="flex justify-center flex-wrap">
-            {products.map((product: any) => (
-              <Product product={product} key={product.id} page="products" />
-            ))}
+            {products.map((product: any) => {
+              return (
+                <Product product={product} key={product.id} page="products" />
+              );
+            })}
           </div>
         </div>
       </div>
     </>
   );
-}
+};
+
+export default Products;
