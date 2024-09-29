@@ -5,15 +5,11 @@ import Product from "../../components/product";
 import { useRouter, useParams } from "next/navigation";
 import Nav from "@/components/nav";
 
-type propsType = {
-  products: productType[];
-  category: string;
-};
-
-const Products = ({ category }: propsType) => {
+const Products = () => {
   const [products, setProducts] = useState([]);
   const router = useRouter();
   const params: any = useParams();
+  const category = params?.category || "all";
 
   const getAllProducts = async () => {
     const data = await getProductsByCategory("all");
