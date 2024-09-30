@@ -26,6 +26,7 @@ const initialState: initialStateTypes = {
     },
   },
   showLoginPage: false,
+  showPaymentSuccess: false,
 };
 
 export const cartSlice = createSlice({
@@ -79,16 +80,13 @@ export const cartSlice = createSlice({
     setSelectedProduct: (state, action: PayloadAction<productType>) => {
       state.selectedProduct = action.payload;
     },
-    // addUser: (state, action: PayloadAction<UserType>) => {
-    //   state.user = action.payload;
-
-    // },
     addUser: (state, action: PayloadAction<UserType>) => {
       const indexToModify = state.users.findIndex(
         (obj: UserType) => obj.emailId === action.payload.emailId
       );
-      console.log({ indexToModify });
-      console.log(action.payload, "action.payload");
+      const selectedUser = state.users.filter(
+        (user: UserType) => user.emailId === action.payload.emailId
+      );
 
       if (indexToModify !== -1) {
         const modifiedObject = {
@@ -98,24 +96,22 @@ export const cartSlice = createSlice({
           isRegistered: action.payload.isRegistered,
           isLoggedIn: action.payload.isLoggedIn,
           isSaved: action.payload.isSaved,
-
-          // ...state.users[indexToModify],
-
-          // isLoggedIn: true,
         };
 
         state.users[indexToModify] = modifiedObject;
-        state.loggedInUser = action.payload;
       } else {
         state.users = [...state.users, action.payload];
       }
-      console.log(state.users, state.loggedInUser);
+      state.loggedInUser = action.payload;
     },
-    // addUser: (state, action: PayloadAction<UserType>) => {
-    //   state.user = action.payload;
-    // },
     setLoginPage: (state, action: PayloadAction<boolean>) => {
       state.showLoginPage = action.payload;
+    },
+    setPaymentPage: (state, action: PayloadAction<boolean>) => {
+      state.showPaymentSuccess = action.payload;
+    },
+    emptyCart: (state, action: PayloadAction<[]>) => {
+      state.cartItems = action.payload;
     },
   },
 });
@@ -137,6 +133,7 @@ export interface initialStateTypes {
   loggedInUser: UserType;
   users: UserType[];
   showLoginPage: boolean;
+  showPaymentSuccess: boolean;
 }
 
 export const {
@@ -150,6 +147,8 @@ export const {
   setSelectedProduct,
   addUser,
   setLoginPage,
+  setPaymentPage,
+  emptyCart,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
