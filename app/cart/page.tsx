@@ -1,5 +1,5 @@
 "use client";
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   addFav,
@@ -12,11 +12,23 @@ import {
 import Image from "next/image";
 import NoData from "../../components/noData";
 import Nav from "@/components/nav";
+import Payment from "@/components/Payment/payment";
 
 const Cart = () => {
   const { cartItems, favItems, user } = useSelector((state: any) => state.cart);
+  const [total, setTotal] = useState(0);
 
   const dispatcher = useDispatch();
+
+  useEffect(() => {
+    const amount =
+      cartItems.length > 0
+        ? cartItems.reduce((acc: number, cart: productType) => {
+            return acc + (cart.quantity || 1) * cart.price;
+          }, 0)
+        : 0;
+    setTotal(amount);
+  }, [cartItems]);
 
   return (
     <>
@@ -72,7 +84,7 @@ const Cart = () => {
                         //   dispatcher(removeItem(product));
                       }
                     }}
-                    className="w-10 rounded"
+                    className="w-10 rounded cursor-pointer"
                     type="number"
                     step={1}
                     min={1}
@@ -93,6 +105,19 @@ const Cart = () => {
           })
         ) : (
           <NoData pageName="cart" />
+        )}
+        {cartItems.length > 0 && (
+          <div className="flex place-content-between mx-5 pb-3">
+            <div className="flex gap-4">
+              <div className="flex gap-4">
+                <span className="text-1xl font-bold">Total:</span>
+                <span>₹{total?.toFixed(2)}</span>
+              </div>
+            </div>
+            <div>
+              <Payment />
+            </div>
+          </div>
         )}
       </div>
     </>

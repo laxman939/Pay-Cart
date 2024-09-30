@@ -1,10 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import {
   addFav,
@@ -16,7 +13,6 @@ import {
 } from "@/app/redux/cartSlice";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ProductImage from "./productImage";
-import { useRouter } from "next/navigation";
 
 const style = {
   position: "absolute" as "absolute",
@@ -37,10 +33,7 @@ const ProductModal = () => {
   const { isProductModalOpen, selectedProduct, favItems, cartItems, user } =
     useSelector((state: any) => state.cart);
 
-  console.log({ cartItems });
-
   const dispatcher = useDispatch();
-  const router = useRouter();
 
   return (
     <>
@@ -110,8 +103,6 @@ const ProductModal = () => {
                       <button
                         className="btnAdd mt-0"
                         onClick={(e) => {
-                          console.log(!user.isRegistered);
-
                           e.stopPropagation();
                           if (user.isRegistered) {
                             if (
