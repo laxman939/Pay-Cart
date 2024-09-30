@@ -20,7 +20,6 @@ const Products = () => {
     getAllProducts();
   }, []);
 
-  // console.log(decodeURIComponent(params.category));
   return (
     <>
       <nav className="px-6 py-4">
