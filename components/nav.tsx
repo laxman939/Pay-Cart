@@ -2,11 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
-import { setLoginPage } from "../app/redux/cartSlice";
+import { addUser, setLoginPage, UserType } from "../app/redux/cartSlice";
 
 const Nav = () => {
   const [cartQty, setCartQty] = useState<number>(0);
   const [windowWidth, setWindowWidth] = useState<number>(0);
+  const [isLogout, setIsLogout] = useState<boolean>(false);
   const { cartItems, loggedInUser } = useSelector((state: any) => state.cart);
 
   const router = useRouter();
@@ -22,7 +23,6 @@ const Nav = () => {
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
-    console.log(!loggedInUser.isRegistered, loggedInUser);
   }, []);
 
   return (
@@ -85,17 +85,36 @@ const Nav = () => {
           </span>
         </button>
         <button
-          className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold"
+          className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold first-letter:uppercase relative"
           //   onClick={() => setPageName("favorite")}
           onClick={() => {
             router.push(`/`);
             // dispatcher(setLoginPage(true));
             !loggedInUser.isLoggedIn
               ? (router.push(`/`), dispatcher(setLoginPage(true)))
-              : false;
+              : setIsLogout(!isLogout);
           }}
         >
           {!loggedInUser.isLoggedIn ? "Login" : loggedInUser.name}
+          {isLogout && (
+            <div
+              className="absolute bg-slate-600 py-1 px-2 rounded-sm"
+              onClick={() => {
+                const storedUser = localStorage.getItem("payCart_User");
+                if (storedUser) {
+                  const user: UserType = JSON.parse(storedUser);
+                  user.isLoggedIn = false;
+                  dispatcher(addUser(user));
+                  router.push(`/`), dispatcher(setLoginPage(true));
+                } else {
+                  console.error("No user found in localStorage");
+                }
+                setIsLogout(false);
+              }}
+            >
+              Logout
+            </div>
+          )}
         </button>
       </div>
     </nav>
