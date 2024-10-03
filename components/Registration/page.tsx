@@ -28,8 +28,6 @@ const Register = () => {
   };
 
   const errorMethod = (isTrue: boolean, type: string) => {
-    console.log(type);
-
     if (isTrue) {
       setErrorMessage("");
     } else {
@@ -51,9 +49,6 @@ const Register = () => {
       ? JSON.parse(storedObjectString)
       : null;
     setStoredUser(storedObject);
-    console.log(storedObject, "storedObjectString");
-    // dispatcher(addUser(newUser));
-    console.log(isLoginFormVisible, "isLoginFormVisible");
   }, [isLoginFormVisible]);
 
   return (
@@ -209,10 +204,9 @@ const Register = () => {
                   password: userPassword,
                   isRegistered: true,
                   isLoggedIn: false,
-                  isSaved: false,
+                  isSaved: true,
                 };
                 localStorage.setItem("payCart_User", JSON.stringify(newUser));
-                console.log(newUser);
                 dispatcher(addUser(newUser));
                 setSuccessMessage(
                   "You've successfully signed up! Start shopping with code 'NEWUSER' to get 10% off your first purchase."
@@ -369,25 +363,26 @@ const Register = () => {
                   storedUser?.emailId === userEmail &&
                   storedUser?.password === userPassword
                 ) {
-                  const updateUser: UserType = {
-                    name: loggedInUser.userName,
-                    emailId: loggedInUser.emailId,
-                    password: loggedInUser.password,
-                    isRegistered: loggedInUser.isRegistered,
-                    isLoggedIn: true,
-                    isSaved: loggedInUser.isSaved,
-                  };
-                  console.log(updateUser);
-                  dispatcher(addUser(updateUser));
-                  setSuccessMessage(
-                    "Successfully logged in! Don't forget to check out our latest collections and promotions. Your savings and rewards are waiting for you."
-                  );
-                  setTimeout(() => {
-                    setSuccessMessage("");
-                    setBtnLoader(false);
-                    // dispatcher(addUser(storedUser));
-                    dispatcher(setLoginPage(false));
-                  }, 6000);
+                  const storedUser = localStorage.getItem("payCart_User");
+
+                  if (storedUser) {
+                    const user: UserType = JSON.parse(storedUser);
+                    user.isLoggedIn = true;
+
+                    setSuccessMessage(
+                      "Successfully logged in! Don't forget to check out our latest collections and promotions. Your savings and rewards are waiting for you."
+                    );
+                    setTimeout(() => {
+                      setSuccessMessage("");
+                      setBtnLoader(false);
+                      dispatcher(setLoginPage(false));
+                      dispatcher(addUser(user));
+                      localStorage.setItem(
+                        "payCart_User",
+                        JSON.stringify(user)
+                      );
+                    }, 5000);
+                  }
                 }
               }}
             >
