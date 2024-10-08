@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Product from "../product";
 import Register from "../Registration/page";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addUser, UserType } from "@/app/redux/cartSlice";
 
 const LandingPage = () => {
   let items = [
@@ -44,7 +45,10 @@ const LandingPage = () => {
   const [products, setProducts] = useState([]);
   const [isRegistered, setIsRegistered] = useState(false);
 
-  const { showLoginPage } = useSelector((state: any) => state.cart);
+  const { showLoginPage, loggedInUser } = useSelector(
+    (state: any) => state.cart
+  );
+  const dispatcher = useDispatch();
 
   const getProductsByCategory = async () => {
     let url = `https://fakestoreapi.com/products`;
@@ -60,6 +64,17 @@ const LandingPage = () => {
   useEffect(() => {
     getProductsByCategory();
   }, [type]);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("payCart_User");
+
+    if (storedUser) {
+      const user: UserType = JSON.parse(storedUser);
+
+      user.isLoggedIn = true;
+      dispatcher(addUser(user));
+    }
+  }, []);
 
   return (
     <div className="w-full">
