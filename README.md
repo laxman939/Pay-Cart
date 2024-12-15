@@ -1,34 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## `Pay-Cart`
 
-## Getting Started
+### URL
 
-First, run the development server:
+To open app
+[https://paycart-store.vercel.app/](https://paycart-store.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Technologies
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+NextJS
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+TypeScript
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Redux Toolkit
 
-## Learn More
+Tailwind
 
-To learn more about Next.js, take a look at the following resources:
+Razorepay Integration
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### FEATURES
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+✔𝘊𝘢𝘳𝘰𝘶𝘴𝘦𝘭🖼 𝘰𝘧 New Offers
 
-## Deploy on Vercel
+✔Filtering based on category
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+✔Modal for product information
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+✔𝘗𝘢𝘨𝘪𝘯𝘢𝘵𝘪𝘰𝘯 𝘸𝘪𝘵𝘩 𝘴𝘰𝘮𝘦 𝘧𝘦𝘢𝘵𝘶𝘳𝘦𝘴🔢
+
+✔𝘚𝘪𝘨𝘯𝘜𝘱, 𝘚𝘪𝘨𝘯𝘐𝘯, 𝘢𝘯𝘥 𝘓𝘰𝘨𝘰𝘶𝘵
+
+✔𝘍𝘢𝘷𝘰𝘶𝘳𝘪𝘵𝘦𝘴❤️🤍
+
+✔Cart
+
+✔Razorepay Payment
+
+✔Responsiveness
+
+#### Landing Page
+
+![Screenshot](https://github.com/laxman939/Pay-Cart/blob/main/Screenshots/paycart_landing.png?raw=true)
+
+#### Signup Page
+
+![Screenshot](https://github.com/laxman939/Pay-Cart/blob/main/Screenshots/paycart_signup.png?raw=true)
+
+#### Products Page
+
+![Screenshot](https://github.com/laxman939/Pay-Cart/blob/main/Screenshots/paycart_products.png?raw=true)
+
+#### Payment & Cart Page
+
+![Screenshot](https://github.com/laxman939/Pay-Cart/blob/main/Screenshots/paycart_payment.png?raw=true)
+
+#### Login Page
+
+![Screenshot](https://github.com/laxman939/Pay-Cart/blob/main/Screenshots/paycart_login.png?raw=true)
