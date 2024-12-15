@@ -107,24 +107,24 @@ const LandingPage = () => {
         <Register />
       ) : (
         <>
-          <div className="">
-            <div className="flex justify-between gap-2 items-center mx-2">
+          <div className="w-full pe-2 h-full">
+            <div className="flex content-between items-center mx-2 w-full h-fulll">
               <Carousel
-                className="w-9/12"
+                className="w-5/6"
                 navButtonsAlwaysVisible
                 fullHeightHover={true}
               >
                 {items.length > 0 &&
                   items.map((item, i) => <Item key={item.title} item={item} />)}
               </Carousel>
-              <div className="flex flex-col items-center my-auto sideImages">
-                <div className="relative">
+              <div className="flex flex-col gap-4 items-center sideImages w-1/6 h-full">
+                <div className="relative pb-2 w-11/12">
                   <Image
                     src={banner1}
                     alt=""
-                    width={300}
-                    height={100}
-                    className={` duration-700 ease-in-out group-hover:opacity-75 ${
+                    // width={400}
+                    // height={150}
+                    className={`w-full h-full duration-700 ease-in-out group-hover:opacity-75 ${
                       loading
                         ? "scale-110 blur-2xl grayscale"
                         : "scale-100 blur-0 grayscale-0"
@@ -135,14 +135,14 @@ const LandingPage = () => {
                     Men collections
                   </div>
                 </div>
-                <div className="pt-3 relative">
+                <div className="relative w-11/12 h-2/4">
                   {" "}
                   <Image
                     src={banner2}
                     alt=""
-                    width={300}
-                    height={100}
-                    className={` duration-700 ease-in-out group-hover:opacity-75 ${
+                    // width={300}
+                    // height={150}
+                    className={`w-full h-2/4 duration-700 ease-in-out group-hover:opacity-75 ${
                       loading
                         ? "scale-110 blur-2xl grayscale"
                         : "scale-100 blur-0 grayscale-0"

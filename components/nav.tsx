@@ -87,12 +87,14 @@ const Nav = () => {
         <button
           className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold first-letter:uppercase relative"
           //   onClick={() => setPageName("favorite")}
-          onClick={() => {
-            router.push(`/`);
-            // dispatcher(setLoginPage(true));
-            !loggedInUser.isLoggedIn
-              ? (router.push(`/`), dispatcher(setLoginPage(true)))
-              : setIsLogout(!isLogout);
+          onClick={(e) => {
+            e.preventDefault();
+            if (!loggedInUser.isLoggedIn) {
+              router.push("/");
+              dispatcher(setLoginPage(true));
+            } else {
+              setIsLogout(!isLogout);
+            }
           }}
         >
           {!loggedInUser.isLoggedIn ? "Login" : loggedInUser.name}
