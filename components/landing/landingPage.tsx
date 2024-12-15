@@ -66,6 +66,25 @@ const LandingPage = () => {
   }, [type]);
 
   useEffect(() => {
+    // Handle visibility change
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        document.title = "Missing you! Come back soon 👋";
+      } else {
+        document.title = "Laxman";
+      }
+    };
+
+    // Event listeners
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    // Cleanup
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
+  }, []);
+
+  useEffect(() => {
     const storedUser = localStorage.getItem("payCart_User");
 
     if (storedUser) {
