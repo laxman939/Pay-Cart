@@ -226,7 +226,7 @@ const Register = () => {
           </button>
         </div>
         <div className={`login ${isLoginFormVisible ? "slide-up" : ""}`}>
-          <div className="center">
+          <div className="center absolute">
             {successMessage === "" ? (
               <h2
                 className="form-title font-semibold cursor-pointer text-center"
