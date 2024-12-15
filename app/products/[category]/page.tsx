@@ -31,7 +31,12 @@ const Category = () => {
           <div className="">
             <span
               className={`mx-3 cursor-pointer ${
-                decodeURIComponent(params.category) === "all"
+                ![
+                  "men's clothing",
+                  "women's clothing",
+                  "electronics",
+                  "jewelery",
+                ].includes(decodeURIComponent(params.category))
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}

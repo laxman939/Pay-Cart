@@ -4,6 +4,44 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { addUser, setLoginPage, UserType } from "../app/redux/cartSlice";
 
+const arrowDown = (
+  <svg
+    width="13"
+    height="7"
+    viewBox="0 0 13 7"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11.6016 1.02272L6.51491 6.10938L1.42825 1.02272"
+      stroke="#000000"
+      strokeOpacity="0.7"
+      strokeWidth="1.45333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+const arrowDownReverse = (
+  <svg
+    width="13"
+    height="7"
+    viewBox="0 0 13 7"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="reverse_arrow"
+  >
+    <path
+      d="M11.6016 1.02272L6.51491 6.10938L1.42825 1.02272"
+      stroke="#000000"
+      strokeOpacity="0.7"
+      strokeWidth="1.45333"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
 const Nav = () => {
   const [cartQty, setCartQty] = useState<number>(0);
   const [windowWidth, setWindowWidth] = useState<number>(0);
@@ -97,7 +135,16 @@ const Nav = () => {
             }
           }}
         >
-          {!loggedInUser.isLoggedIn ? "Login" : loggedInUser.name}
+          {!loggedInUser.isLoggedIn ? (
+            "Login"
+          ) : (
+            <span className="flex gap-2 items-center ">
+              <span className="first-letter:uppercase">
+                {loggedInUser.name}
+              </span>
+              <span>{isLogout ? arrowDownReverse : arrowDown}</span>
+            </span>
+          )}
           {isLogout && (
             <div
               className="absolute bg-slate-600 py-1 px-2 rounded-sm"
