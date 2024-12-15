@@ -71,7 +71,7 @@ const LandingPage = () => {
       if (document.hidden) {
         document.title = "Missing you! Come back soon 👋";
       } else {
-        document.title = "Laxman";
+        document.title = "Pay Cart";
       }
     };
 
