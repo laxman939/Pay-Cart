@@ -141,8 +141,6 @@ const ProductModal = () => {
           </Modal>
         </div>
       ) : null}
-
-      {/* {product.id !== 0 ? <Product product={product} key={product.id} /> : null} */}
     </>
   );
 };

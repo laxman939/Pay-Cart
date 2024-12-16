@@ -66,7 +66,7 @@ const Payment = () => {
       },
       prefill: {
         name: "Laxman",
-        email: "ramlaxman957@gmail.com",
+        email: "ramlaxman947@gmail.com",
         contact: "8686606625",
       },
       theme: {

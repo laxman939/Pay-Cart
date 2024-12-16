@@ -84,9 +84,6 @@ export const cartSlice = createSlice({
       const indexToModify = state.users.findIndex(
         (obj: UserType) => obj.emailId === action.payload.emailId
       );
-      const selectedUser = state.users.filter(
-        (user: UserType) => user.emailId === action.payload.emailId
-      );
 
       if (indexToModify !== -1) {
         const modifiedObject = {

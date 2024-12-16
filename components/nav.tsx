@@ -68,7 +68,6 @@ const Nav = () => {
       <button
         type="button"
         className="text-slate-950 hover:text-black cursor-pointer text-2xl font-bold"
-        // onClick={() => setPageName("home")}
         onClick={() => {
           router.push(`/`);
           dispatcher(setLoginPage(false));
@@ -81,10 +80,8 @@ const Nav = () => {
           windowWidth > 1280 ? "md:mr-14 md:pr-2" : "mr-0 pr-0"
         }`}
       >
-        {/* <div>Home</div> */}
         <button
           className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold"
-          //   onClick={() => setPageName("favorite")}
           onClick={() => {
             !loggedInUser.isRegistered
               ? (router.push(`/`), dispatcher(setLoginPage(true)))
@@ -95,7 +92,6 @@ const Nav = () => {
         </button>
         <button
           className="text-slate-950 hover:text-black cursor-pointer font-bold"
-          //   onClick={() => setPageName("cart")}
           onClick={() => {
             !loggedInUser.isRegistered
               ? (router.push(`/`), dispatcher(setLoginPage(true)))
@@ -124,7 +120,6 @@ const Nav = () => {
         </button>
         <button
           className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold first-letter:uppercase relative"
-          //   onClick={() => setPageName("favorite")}
           onClick={(e) => {
             e.preventDefault();
             if (!loggedInUser.isLoggedIn) {

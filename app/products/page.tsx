@@ -62,7 +62,6 @@ const Products = () => {
               }`}
               onClick={() => {
                 router.push(`/products/women's clothing`);
-                // getProductsByCategory("women's clothing")
               }}
             >
               Women&apos;s clothing
@@ -75,7 +74,6 @@ const Products = () => {
               }`}
               onClick={() => {
                 router.push(`/products/electronics`);
-                // getProductsByCategory("electronics")
               }}
             >
               Electronics
@@ -88,7 +86,6 @@ const Products = () => {
               }`}
               onClick={() => {
                 router.push(`/products/jewelery`);
-                //getProductsByCategory("jewelery")
               }}
             >
               Jewellary

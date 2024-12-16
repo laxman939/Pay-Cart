@@ -13,12 +13,6 @@ const reducer = {
   cart: cartSlice.reducer,
 };
 
-// export const store = configureStore({
-//   reducer: {
-//     cart: cartReduer,
-//   },
-// });
-
 export const reduxStore = configureStore({
   reducer,
 });

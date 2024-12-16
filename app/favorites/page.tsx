@@ -1,6 +1,6 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import { addFav, removeFav, removeItem } from "../redux/cartSlice";
+import { addFav, removeFav } from "../redux/cartSlice";
 import ProductImage from "../../components/productImage";
 import NoData from "../../components/noData";
 import Nav from "@/components/nav";
@@ -29,8 +29,6 @@ const Favorites = () => {
                 >
                   {favItems.some((e: any) => e.id === product.id) ? "❤️" : "🤍"}
                 </div>
-                {/* <div className="absolute top-1 right-2">🤍❤️</div> */}
-                {/* <Image src={product.image} alt="" className="mx-auto my-2" /> */}
                 <ProductImage product={product} fill={true} />
                 <div className="text-center text-black mt-5 text-sm">
                   {product.title}
