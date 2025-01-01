@@ -64,7 +64,10 @@ const Nav = () => {
   }, []);
 
   return (
-    <nav className="flex justify-between mx-5 px-3">
+    <nav
+      className="flex justify-between mx-5 px-3"
+      onClick={() => setIsLogout(false)}
+    >
       <button
         type="button"
         className="text-slate-950 hover:text-black cursor-pointer text-2xl font-bold"
@@ -122,6 +125,7 @@ const Nav = () => {
           className="text-slate-950 hover:text-black cursor-pointer fs-5 font-bold first-letter:uppercase relative"
           onClick={(e) => {
             e.preventDefault();
+            e.stopPropagation();
             if (!loggedInUser.isLoggedIn) {
               router.push("/");
               dispatcher(setLoginPage(true));
