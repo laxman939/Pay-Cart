@@ -142,7 +142,7 @@ const Nav = () => {
           )}
           {isLogout && (
             <div
-              className="absolute bg-slate-600 py-1 px-2 rounded-sm"
+              className="absolute bg-slate-600 py-1 px-3 rounded-sm z-10"
               onClick={() => {
                 const storedUser = localStorage.getItem("payCart_User");
                 if (storedUser) {
