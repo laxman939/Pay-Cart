@@ -40,7 +40,7 @@ const Cart = () => {
           cartItems.map((product: any) => {
             return (
               <div
-                className="text-slate-100 cartCard flex items-center justify-between relative px-5"
+                className="text-slate-100 cartCard flex items-center justify-between relative px-5 mx-12"
                 key={product.id}
               >
                 <button
@@ -55,14 +55,16 @@ const Cart = () => {
                     ? "❤️"
                     : "🤍"}
                 </button>
-                <Image
-                  height={100}
-                  width={100}
-                  src={product.image}
-                  alt=""
-                  className="my-2"
-                />
-                <div className="text-center text-black text-sm">
+                <div className="w-2/12">
+                  <Image
+                    height={100}
+                    width={100}
+                    src={product.image}
+                    alt=""
+                    className="my-2"
+                  />
+                </div>
+                <div className="text-center text-black text-sm w-4/12">
                   {product.title}
                 </div>
                 <div className="text-center text-black font-bold mx-2">
@@ -107,7 +109,7 @@ const Cart = () => {
           <NoData pageName="cart" />
         )}
         {cartItems.length > 0 && (
-          <div className="flex place-content-between mx-5 pb-3">
+          <div className="flex place-content-between mx-12 pb-3">
             <div className="flex gap-4">
               <div className="flex gap-4">
                 <span className="text-1xl font-bold">Total:</span>
