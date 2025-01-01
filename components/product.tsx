@@ -110,7 +110,7 @@ const Product = ({ product, page }: propsTypes) => {
             }
           }}
         >
-          {!isAdded ? "Add to cart" : "Added"}
+          {!isAdded ? "Add to cart" : "Adding..."}
         </button>
       </div>
     </button>

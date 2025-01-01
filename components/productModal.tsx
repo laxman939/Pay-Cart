@@ -1,5 +1,4 @@
 "use client";
-
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -13,6 +12,7 @@ import {
 } from "@/app/redux/cartSlice";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ProductImage from "./productImage";
+import { useState } from "react";
 
 const style = {
   position: "absolute" as "absolute",
@@ -30,8 +30,15 @@ const style = {
 };
 
 const ProductModal = () => {
-  const { isProductModalOpen, selectedProduct, favItems, cartItems, user } =
-    useSelector((state: any) => state.cart);
+  const [isAdded, setIsAdded] = useState(false);
+  const {
+    isProductModalOpen,
+    selectedProduct,
+    favItems,
+    cartItems,
+    user,
+    loggedInUser,
+  } = useSelector((state: any) => state.cart);
 
   const dispatcher = useDispatch();
 
@@ -100,7 +107,7 @@ const ProductModal = () => {
                     </div>
 
                     <div className="flex justify-end">
-                      <button
+                      {/* <button
                         className="btnAdd mt-0"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -132,6 +139,45 @@ const ProductModal = () => {
                         }}
                       >
                         Add to cart
+                      </button> */}
+                      <button
+                        className="btnAdd"
+                        disabled={isAdded}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (loggedInUser.isRegistered) {
+                            setIsAdded(true);
+                            setTimeout(() => {
+                              if (
+                                cartItems.some(
+                                  (item: productType) =>
+                                    item.id === selectedProduct.id
+                                )
+                              ) {
+                                dispatcher(increaseQnty(selectedProduct));
+                                setIsAdded(false);
+                              } else {
+                                const newProduct: any = {
+                                  category: selectedProduct.category,
+                                  description: selectedProduct.description,
+                                  id: selectedProduct.id,
+                                  image: selectedProduct.image,
+                                  price: selectedProduct.price,
+                                  quantity: 1,
+                                  rating: selectedProduct.rating,
+                                  title: selectedProduct.title,
+                                };
+                                dispatcher(addItem(newProduct));
+                                setIsAdded(false);
+                              }
+                            }, 1000);
+                          } else {
+                            dispatcher(setProductModalOpen(false));
+                            dispatcher(setLoginPage(true));
+                          }
+                        }}
+                      >
+                        {!isAdded ? "Add to cart" : "Adding..."}
                       </button>
                     </div>
                   </div>
