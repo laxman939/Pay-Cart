@@ -82,7 +82,7 @@ const ProductModal = () => {
                       <div className="text-center text-black font-bold">
                         ₹ {Number(selectedProduct.price).toFixed(2)}
                       </div>
-                      <button
+                      {/* <button
                         className="text-end"
                         onClick={(e) => {
                           e.stopPropagation();
@@ -95,6 +95,29 @@ const ProductModal = () => {
                           } else {
                             dispatcher(setProductModalOpen(false));
                             dispatcher(setLoginPage(true));
+                          }
+                        }}
+                      >
+                        {favItems.some(
+                          (e: productType) => e.id === selectedProduct.id
+                        )
+                          ? "❤️"
+                          : "🤍"}
+                      </button> */}
+                      <button
+                        type="button"
+                        className="text-end"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          !favItems.some(
+                            (e: productType) => e.id === selectedProduct.id
+                          )
+                            ? dispatcher(addFav(selectedProduct))
+                            : dispatcher(removeFav(selectedProduct));
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") {
+                            return false;
                           }
                         }}
                       >
