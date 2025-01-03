@@ -436,3 +436,25 @@ input[type="number"]:hover {
 .pay_btn:hover {
   background-color: rgb(62, 21, 129);
 }
+.main_page {
+  box-sizing: border-box;
+  height: 100vh;
+  overflow-y: auto;
+}
+.main_page::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+  height: 4px;
+}
+.main_page::-webkit-scrollbar-track {
+  background: #212a30; /* Background color for the scrollbar track */
+  border-radius: 4px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
+.main_page::-webkit-scrollbar-thumb {
+  background: rgb(62, 21, 129);
+  border-radius: 4px;
+}
+.main_page::-webkit-scrollbar-thumb:hover {
+  background: rgb(72, 22, 153);
+}
