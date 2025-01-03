@@ -153,6 +153,7 @@ const Nav = () => {
                   const user: UserType = JSON.parse(storedUser);
                   user.isLoggedIn = false;
                   dispatcher(addUser(user));
+                  localStorage.clear();
                   router.push(`/`), dispatcher(setLoginPage(true));
                 } else {
                   console.error("No user found in localStorage");
