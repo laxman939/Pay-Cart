@@ -4,6 +4,7 @@ import { getProductsByCategory } from "../../../components/commonMethods";
 import Product from "../../../components/product";
 import { useRouter, useParams } from "next/navigation";
 import Nav from "@/components/nav";
+import CartLoader from "@/components/CartLoader/CartLoader";
 
 const Category = () => {
   const [products, setProducts] = useState<productType[]>([]);
@@ -98,11 +99,23 @@ const Category = () => {
         </nav>
         <div className="">
           <div className="flex justify-center flex-wrap">
-            {products.map((product: any) => {
-              return (
-                <Product product={product} key={product.id} page="products" />
-              );
-            })}
+            {products?.length > 0 ? (
+              <>
+                {products.map((product: any) => {
+                  return (
+                    <Product
+                      product={product}
+                      key={product.id}
+                      page="products"
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              <div className="my-20">
+                <CartLoader />
+              </div>
+            )}
           </div>
         </div>
       </div>
