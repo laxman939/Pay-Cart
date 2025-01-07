@@ -11,6 +11,7 @@ import Product from "../product";
 import Register from "../Registration/page";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, UserType } from "@/app/redux/cartSlice";
+import CartLoader from "../CartLoader/CartLoader";
 
 const LandingPage = () => {
   let items = [
@@ -44,6 +45,7 @@ const LandingPage = () => {
   const [type, setType] = useState("new");
   const [products, setProducts] = useState([]);
   const [isRegistered, setIsRegistered] = useState(false);
+  const [apiLoader, setApiLoader] = useState(false);
 
   const { showLoginPage, loggedInUser } = useSelector(
     (state: any) => state.cart
@@ -51,13 +53,16 @@ const LandingPage = () => {
   const dispatcher = useDispatch();
 
   const getProductsByCategory = async () => {
+    setApiLoader(true);
     let url = `https://fakestoreapi.com/products`;
 
     try {
       const response = await axios.get(url);
       setProducts(response.data);
+      setApiLoader(false);
     } catch (error: any) {
       console.log(error.message);
+      setApiLoader(false);
     }
   };
 
@@ -175,17 +180,23 @@ const LandingPage = () => {
           </div>
           <div>
             <div className="flex justify-center flex-wrap">
-              {products
-                .slice(type === "best" ? 2 : 6, type === "best" ? 6 : 10)
-                .map((product: any) => {
-                  return (
-                    <Product
-                      product={product}
-                      key={product.id}
-                      page="landing"
-                    />
-                  );
-                })}
+              {apiLoader ? (
+                <CartLoader />
+              ) : (
+                <>
+                  {products
+                    .slice(type === "best" ? 2 : 6, type === "best" ? 6 : 10)
+                    .map((product: any) => {
+                      return (
+                        <Product
+                          product={product}
+                          key={product.id}
+                          page="landing"
+                        />
+                      );
+                    })}
+                </>
+              )}
             </div>
           </div>
         </>
