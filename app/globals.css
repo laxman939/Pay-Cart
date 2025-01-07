@@ -441,20 +441,29 @@ input[type="number"]:hover {
   height: 100vh;
   overflow-y: auto;
 }
-.main_page::-webkit-scrollbar {
-  width: 4px; /* Width of the scrollbar */
-  height: 4px;
+.page_products {
+  box-sizing: border-box;
+  overflow-y: auto;
+  height: 80vh;
 }
-.main_page::-webkit-scrollbar-track {
-  background: #212a30; /* Background color for the scrollbar track */
+.main_page::-webkit-scrollbar,
+.page_products::-webkit-scrollbar {
+  width: 7px; /* Width of the scrollbar */
+  height: 7px;
+}
+.main_page::-webkit-scrollbar-track,
+.page_products::-webkit-scrollbar-track {
+  background: #bbc0c3; /* Background color for the scrollbar track */
   border-radius: 4px;
   margin-right: 3px;
   margin-bottom: 3px;
 }
-.main_page::-webkit-scrollbar-thumb {
+.main_page::-webkit-scrollbar-thumb,
+.page_products::-webkit-scrollbar-thumb {
   background: rgb(62, 21, 129);
   border-radius: 4px;
 }
-.main_page::-webkit-scrollbar-thumb:hover {
+.main_page::-webkit-scrollbar-thumb:hover,
+.page_products::-webkit-scrollbar-thumb:hover {
   background: rgb(72, 22, 153);
 }

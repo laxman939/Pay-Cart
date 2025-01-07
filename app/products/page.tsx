@@ -94,7 +94,7 @@ const Products = () => {
             </span>
           </div>
         </nav>
-        <div className="">
+        <div className="page_products">
           <div className="flex justify-center flex-wrap">
             {products?.length > 0 ? (
               <>
