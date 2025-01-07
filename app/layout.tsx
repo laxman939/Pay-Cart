@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Providers } from "./redux/providers";
 import ProductModal from "../components/productModal";
+import { useEffect } from "react";
+import VisibilityHandler from "@/components/VisibilityHandler/VisibilityHandler";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +24,7 @@ export default function RootLayout({
         <body className={inter.className}>
           {children}
           <ProductModal />
+          <VisibilityHandler />
         </body>
       </html>
     </Providers>
