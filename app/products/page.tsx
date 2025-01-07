@@ -4,9 +4,11 @@ import { getProductsByCategory } from "@/components/commonMethods";
 import Product from "../../components/product";
 import { useRouter, useParams } from "next/navigation";
 import Nav from "@/components/nav";
+import CartLoader from "@/components/CartLoader/CartLoader";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
+  const [apiLoader, setApiLoader] = useState(false);
   const router = useRouter();
   const params: any = useParams();
   const category = params?.category || "all";
@@ -30,7 +32,7 @@ const Products = () => {
           <div className="">
             <span
               className={`mx-3 cursor-pointer ${
-                category === undefined
+                category === "all"
                   ? "border-b-4 border-b-violet-500"
                   : "border-transparent"
               }`}
@@ -94,11 +96,23 @@ const Products = () => {
         </nav>
         <div className="">
           <div className="flex justify-center flex-wrap">
-            {products.map((product: any) => {
-              return (
-                <Product product={product} key={product.id} page="products" />
-              );
-            })}
+            {products?.length > 0 ? (
+              <>
+                {products.map((product: any) => {
+                  return (
+                    <Product
+                      product={product}
+                      key={product.id}
+                      page="products"
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              <div className="my-20">
+                <CartLoader />
+              </div>
+            )}
           </div>
         </div>
       </div>
